@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management System</title>
+    <script src="auth-guard.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Inventory Management System</h1>
+
+        <div class="location-panel">
+            <div class="filter-field">
+                <label for="locationDropdownBtn">Location/Plant</label>
+                <div class="multi-select" id="locationMultiSelect">
+                    <button type="button" id="locationDropdownBtn" class="multi-select-toggle">Select locations</button>
+                    <div id="locationDropdownMenu" class="multi-select-menu" hidden>
+                        <label class="multi-option select-all-option">
+                            <input type="checkbox" id="locationSelectAll">
+                            <span>Select All Locations</span>
+                        </label>
+                        <div id="locationOptions" class="multi-options-list"></div>
+                    </div>
+                </div>
+              
+            </div>
+
+            <div class="filter-field">
+                <label for="fromDateFilter">From Date</label>
+                <input type="date" id="fromDateFilter">
+            </div>
+
+            <div class="filter-field">
+                <label for="toDateFilter">To Date</label>
+                <input type="date" id="toDateFilter">
+            </div>
+        </div>
+        
+        <!-- Inventory List Table -->
+        <div class="section-header">
+            <h2>Current Stock</h2>
+            <div class="toolbar">
+                <input type="text" id="findInput" placeholder="Find by any text...">
+                <button id="openAddRecordBtn" type="button">Add Record</button>
+                <button id="findBtn" type="button">Find</button>
+                <button id="clearFindBtn" type="button" class="secondary-btn">Clear</button>
+                <button id="importExcelBtn" type="button">Import</button>
+                <button id="exportExcelBtn" type="button" class="export-btn">Export</button>
+                <input id="importExcelInput" type="file" accept=".xlsx,.xls,.csv" hidden>
+            </div>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>DATE</th>
+                        <th>LOCATION/PLANT</th>
+                        <th>INV. NO.</th>
+                        <th>RECIPIENT</th>
+                        <th>UDISE</th>
+                        <th>RECIPIENT ADDRESS</th>
+                        <th>VEHICLE NO</th>
+                        <th>EWAYBILL NO</th>
+                        <th>BOYS</th>
+                        <th>GIRLS</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="inventoryTableBody">
+                    <!-- Dynamic rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+
+        <section class="cabin-summary-section" aria-labelledby="cabinSummaryTitle">
+            <div class="cabin-summary-header">
+                <h2 id="cabinSummaryTitle">CABIN SUMMARY <span>(Month Wise)</span></h2>
+                <div class="cabin-summary-actions">
+                    <select id="cabinSummaryPeriod" class="cabin-period-select" aria-label="Cabin summary period">
+                        <option value="6">Last 6 Months</option>
+                        <option value="12">Last 12 Months</option>
+                        <option value="year">This Year</option>
+                    </select>
+                    <div class="cabin-summary-total">Total Cabins: <strong id="totalCabins">0</strong></div>
+                </div>
+            </div>
+            <div class="cabin-chart-legend">
+                <span><i class="cabin-legend-dot boys-dot"></i>Boys</span>
+                <span><i class="cabin-legend-dot girls-dot"></i>Girls</span>
+            </div>
+            <div class="cabin-bar-chart">
+                <div class="cabin-chart-y-axis">
+                    <span id="cabinAxisTop">0</span>
+                    <span id="cabinAxisUpper">0</span>
+                    <span id="cabinAxisMiddle">0</span>
+                    <span id="cabinAxisLower">0</span>
+                    <span>0</span>
+                </div>
+                <div class="cabin-chart-area">
+                    <div class="cabin-grid-line cabin-line-1"></div>
+                    <div class="cabin-grid-line cabin-line-2"></div>
+                    <div class="cabin-grid-line cabin-line-3"></div>
+                    <div class="cabin-grid-line cabin-line-4"></div>
+                    <div class="cabin-grid-line cabin-line-5"></div>
+                    <div id="cabinSummaryBars" class="cabin-bars"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="recordModal" class="modal-overlay" style="display:none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <div>
+                    <h2 id="recordModalTitle">Add Record</h2>
+                    <p id="recordModalSubtitle">Create a new inventory record</p>
+                </div>
+                <button type="button" id="closeRecordModalBtn" class="modal-close">×</button>
+            </div>
+
+            <form id="itemForm" class="form-container modal-form">
+                <select id="itemLocation" required></select>
+                <input type="date" id="date" required>
+                <input type="text" id="inv_no" placeholder="INV. NO." required>
+                <input type="text" id="recipient" placeholder="Recipient" required>
+                <input type="text" id="udise" placeholder="UDISE" required>
+                <input type="text" id="recipient_address" placeholder="Recipient Address" required>
+                <input type="text" id="vehicle_no" placeholder="Vehicle No" required>
+                <input type="text" id="ewaybill_no" placeholder="Ewaybill No" required>
+                <input type="number" id="boys" placeholder="Boys" min="0" required>
+                <input type="number" id="girls" placeholder="Girls" min="0" required>
+
+                <div class="modal-actions">
+                    <button id="cancelRecordBtn" type="button" class="secondary-btn">Cancel</button>
+                    <button id="submitBtn" type="submit">Save Record</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script>
+        const API_URL = './api/items';
+        const LOCATION_FILTER_STORAGE_KEY = 'inventory_selected_locations';
+        const ITEM_LOCATION_STORAGE_KEY = 'inventory_selected_location';
+        const LOCATIONS = [
+            'Arneel Industries Karodi',
+            'Anil Industries Karodi',
+            'Anil Industries Ghanegoan',
+            'Anil Industries Yavatmal',
+            'Kpr Projections'
+        ];
+
+        const locationDropdownBtn = document.getElementById('locationDropdownBtn');
+        const locationDropdownMenu = document.getElementById('locationDropdownMenu');
+        const locationOptionsContainer = document.getElementById('locationOptions');
+        const locationSelectAllCheckbox = document.getElementById('locationSelectAll');
+        const openAddRecordBtn = document.getElementById('openAddRecordBtn');
+        const recordModal = document.getElementById('recordModal');
+        const closeRecordModalBtn = document.getElementById('closeRecordModalBtn');
+        const cancelRecordBtn = document.getElementById('cancelRecordBtn');
+        const recordModalTitle = document.getElementById('recordModalTitle');
+        const recordModalSubtitle = document.getElementById('recordModalSubtitle');
+        const itemLocationSelect = document.getElementById('itemLocation');
+        const fromDateFilterInput = document.getElementById('fromDateFilter');
+        const toDateFilterInput = document.getElementById('toDateFilter');
+        const importExcelBtn = document.getElementById('importExcelBtn');
+        const importExcelInput = document.getElementById('importExcelInput');
+        const cabinSummaryBars = document.getElementById('cabinSummaryBars');
+        const cabinAxisTop = document.getElementById('cabinAxisTop');
+        const cabinAxisUpper = document.getElementById('cabinAxisUpper');
+        const cabinAxisMiddle = document.getElementById('cabinAxisMiddle');
+        const cabinAxisLower = document.getElementById('cabinAxisLower');
+        const cabinSummaryPeriod = document.getElementById('cabinSummaryPeriod');
+        const totalCabins = document.getElementById('totalCabins');
+        let allItems = [];
+        let filteredItems = [];
+        let selectedFilterLocations = new Set();
+        let editingId = null;
+
+        function normalizeLocationName(value) {
+            return String(value || '').trim().replace(/\s+/g, ' ');
+        }
+
+        function isValidLocation(value) {
+            return LOCATIONS.includes(normalizeLocationName(value));
+        }
+
+        function parseStoredLocationList(rawValue) {
+            if (!rawValue) {
+                return [];
+            }
+
+            try {
+                const parsed = JSON.parse(rawValue);
+                if (!Array.isArray(parsed)) {
+                    return [];
+                }
+
+                return parsed
+                    .map((value) => normalizeLocationName(value))
+                    .filter((value) => isValidLocation(value));
+            } catch (_error) {
+                return [];
+            }
+        }
+
+        function getSelectedFilterLocations() {
+            return Array.from(selectedFilterLocations);
+        }
+
+        function updateLocationDropdownLabel() {
+            const selectedLocations = getSelectedFilterLocations();
+            if (!selectedLocations.length) {
+                locationDropdownBtn.textContent = 'Select locations';
+                return;
+            }
+
+            if (selectedLocations.length === LOCATIONS.length) {
+                locationDropdownBtn.textContent = 'All Locations';
+                return;
+            }
+
+            if (selectedLocations.length === 1) {
+                locationDropdownBtn.textContent = selectedLocations[0];
+                return;
+            }
+
+            locationDropdownBtn.textContent = `${selectedLocations.length} locations selected`;
+        }
+
+        function syncLocationCheckboxStates() {
+            const selectedLocations = getSelectedFilterLocations();
+            const selectedSet = new Set(selectedLocations);
+
+            Array.from(locationOptionsContainer.querySelectorAll('input[type="checkbox"]')).forEach((checkbox) => {
+                checkbox.checked = selectedSet.has(checkbox.value);
+            });
+
+            locationSelectAllCheckbox.checked = selectedLocations.length === LOCATIONS.length;
+            locationSelectAllCheckbox.indeterminate = selectedLocations.length > 0 && selectedLocations.length < LOCATIONS.length;
+
+            updateLocationDropdownLabel();
+        }
+
+        function setSelectedFilterLocations(locations) {
+            selectedFilterLocations = new Set(
+                locations
+                    .map((value) => normalizeLocationName(value))
+                    .filter((value) => isValidLocation(value))
+            );
+
+            syncLocationCheckboxStates();
+        }
+
+        function initializeItemLocationOptions(defaultLocation) {
+            itemLocationSelect.innerHTML = '';
+
+            LOCATIONS.forEach((locationName) => {
+                const option = document.createElement('option');
+                option.value = locationName;
+                option.textContent = locationName;
+                itemLocationSelect.appendChild(option);
+            });
+
+            const normalizedDefault = normalizeLocationName(defaultLocation);
+            itemLocationSelect.value = isValidLocation(normalizedDefault) ? normalizedDefault : LOCATIONS[0];
+        }
+
+        function initializeLocationOptions() {
+            locationOptionsContainer.innerHTML = '';
+
+            LOCATIONS.forEach((locationName) => {
+                const label = document.createElement('label');
+                label.className = 'multi-option';
+
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = locationName;
+                checkbox.addEventListener('change', async () => {
+                    if (checkbox.checked) {
+                        selectedFilterLocations.add(locationName);
+                    } else {
+                        selectedFilterLocations.delete(locationName);
+                    }
+
+                    syncLocationCheckboxStates();
+                    await fetchInventory();
+                });
+
+                const text = document.createElement('span');
+                text.textContent = locationName;
+
+                label.appendChild(checkbox);
+                label.appendChild(text);
+                locationOptionsContainer.appendChild(label);
+            });
+
+            const savedLocations = parseStoredLocationList(localStorage.getItem(LOCATION_FILTER_STORAGE_KEY));
+            const savedSingleLocation = normalizeLocationName(localStorage.getItem(ITEM_LOCATION_STORAGE_KEY) || '');
+            const initialLocations = savedLocations.length ? savedLocations : LOCATIONS;
+
+            setSelectedFilterLocations(initialLocations);
+            initializeItemLocationOptions(savedSingleLocation || initialLocations[0]);
+        }
+
+        function openAddRecordModal() {
+            editingId = null;
+            document.getElementById('itemForm').reset();
+            recordModalTitle.textContent = 'Add Record';
+            recordModalSubtitle.textContent = 'Create a new inventory record';
+            document.getElementById('submitBtn').textContent = 'Save Record';
+
+            const savedLocation = normalizeLocationName(localStorage.getItem(ITEM_LOCATION_STORAGE_KEY) || '');
+            itemLocationSelect.value = isValidLocation(savedLocation) ? savedLocation : LOCATIONS[0];
+
+            recordModal.style.display = 'flex';
+        }
+
+        function closeRecordModal() {
+            recordModal.style.display = 'none';
+            editingId = null;
+            document.getElementById('itemForm').reset();
+            const savedLocation = normalizeLocationName(localStorage.getItem(ITEM_LOCATION_STORAGE_KEY) || '');
+            itemLocationSelect.value = isValidLocation(savedLocation) ? savedLocation : LOCATIONS[0];
+        }
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function getCurrentMonthRange() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            const start = new Date(year, month, 1);
+            const end = new Date(year, month + 1, 0);
+            const toISODate = (date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+            return { from: toISODate(start), to: toISODate(end) };
+        }
+
+        function renderCabinSummary(items) {
+            const totalsByMonth = new Map();
+            items.forEach((item) => {
+                const date = String(item.date || '');
+                if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+
+                const monthKey = date.slice(0, 7);
+                const totals = totalsByMonth.get(monthKey) || { boys: 0, girls: 0 };
+                totals.boys += Number(item.boys) || 0;
+                totals.girls += Number(item.girls) || 0;
+                totalsByMonth.set(monthKey, totals);
+            });
+
+            const now = new Date();
+            const selectedPeriod = cabinSummaryPeriod.value;
+            const monthCount = selectedPeriod === 'year' ? 12 : Number(selectedPeriod);
+            const firstMonthIndex = selectedPeriod === 'year' ? 0 : now.getMonth() - monthCount + 1;
+            const rows = Array.from({ length: monthCount }, (_, index) => {
+                const monthDate = new Date(now.getFullYear(), firstMonthIndex + index, 1);
+                const monthKey = `${monthDate.getFullYear()}-${String(monthDate.getMonth() + 1).padStart(2, '0')}`;
+                return [monthKey, totalsByMonth.get(monthKey) || { boys: 0, girls: 0 }];
+            });
+            let totalBoys = 0;
+            let totalGirls = 0;
+            const largestValue = Math.max(...rows.flatMap(([, totals]) => [totals.boys, totals.girls]), 1);
+            const axisStep = Math.ceil(largestValue / 4);
+            const axisMax = axisStep * 4;
+            cabinAxisTop.textContent = axisMax;
+            cabinAxisUpper.textContent = axisStep * 3;
+            cabinAxisMiddle.textContent = axisStep * 2;
+            cabinAxisLower.textContent = axisStep;
+            cabinSummaryBars.innerHTML = rows.map(([month, totals]) => {
+                totalBoys += totals.boys;
+                totalGirls += totals.girls;
+                const monthLabel = new Date(`${month}-01T00:00:00`).toLocaleString('en-US', { month: 'long', year: 'numeric' });
+                const total = totals.boys + totals.girls;
+                const boysHeight = (totals.boys / axisMax) * 100;
+                const girlsHeight = (totals.girls / axisMax) * 100;
+                return `
+                    <div class="cabin-month" title="${escapeHtml(monthLabel)}: Boys ${totals.boys}, Girls ${totals.girls}, Total ${total}">
+                        <div class="cabin-bar boys-bar" style="height:${boysHeight}%"><span>${totals.boys}</span></div>
+                        <div class="cabin-bar girls-bar" style="height:${girlsHeight}%"><span>${totals.girls}</span></div>
+                        <span class="cabin-month-label">${escapeHtml(monthLabel)}</span>
+                    </div>`;
+            }).join('') || '<p class="cabin-summary-empty">No cabin data available.</p>';
+            totalCabins.textContent = totalBoys + totalGirls;
+        }
+
+        function getItemFormData() {
+            return {
+                date: document.getElementById('date').value,
+                location: normalizeLocationName(itemLocationSelect.value),
+                inv_no: document.getElementById('inv_no').value.trim(),
+                recipient: document.getElementById('recipient').value.trim(),
+                udise: document.getElementById('udise').value.trim(),
+                recipient_address: document.getElementById('recipient_address').value.trim(),
+                vehicle_no: document.getElementById('vehicle_no').value.trim(),
+                ewaybill_no: document.getElementById('ewaybill_no').value.trim(),
+                boys: Number(document.getElementById('boys').value || 0),
+                girls: Number(document.getElementById('girls').value || 0)
+            };
+        }
+
+        function validateItemForm(payload) {
+            if (!/^\d{11}$/.test(payload.udise)) {
+                return { field: 'udise', message: 'UDISE No must be exactly 11 digits.' };
+            }
+            if (!/^[A-Za-z0-9]{1,10}$/.test(payload.vehicle_no)) {
+                return { field: 'vehicle_no', message: 'Vehicle No must be 10 or fewer alphanumeric characters.' };
+            }
+            if (!/^\d{12}$/.test(payload.ewaybill_no)) {
+                return { field: 'ewaybill_no', message: 'EwayBill No must be exactly 12 digits.' };
+            }
+            return null;
+        }
+
+        cabinSummaryPeriod.addEventListener('change', () => renderCabinSummary(allItems));
+
+        function renderInventory(items) {
+            const tableBody = document.getElementById('inventoryTableBody');
+            tableBody.innerHTML = '';
+
+            items.forEach((item) => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${escapeHtml(item.date)}</td>
+                    <td>${escapeHtml(item.location || '')}</td>
+                    <td>${escapeHtml(item.inv_no)}</td>
+                    <td>${escapeHtml(item.recipient)}</td>
+                    <td>${escapeHtml(item.udise)}</td>
+                    <td>${escapeHtml(item.recipient_address)}</td>
+                    <td>${escapeHtml(item.vehicle_no)}</td>
+                    <td>${escapeHtml(item.ewaybill_no)}</td>
+                    <td>${Number(item.boys) || 0}</td>
+                    <td>${Number(item.girls) || 0}</td>
+                    <td class="actions-cell">
+                        <button class="print-btn" onclick="printRow(${item.id})">Print</button>
+                        <button class="edit-btn" onclick="startEdit(${item.id})">Edit</button>
+                        <button class="delete-btn" onclick="deleteItem(${item.id})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function applyFilter() {
+            const query = document.getElementById('findInput').value.trim().toLowerCase();
+            const fromDate = fromDateFilterInput.value;
+            const toDate = toDateFilterInput.value;
+
+            if (fromDate && toDate && fromDate > toDate) {
+                alert('From Date cannot be later than To Date.');
+                filteredItems = [];
+                renderInventory(filteredItems);
+                return;
+            }
+
+            const filtered = allItems.filter((item) => {
+                const itemDate = String(item.date || '');
+                const matchesFromDate = !fromDate || itemDate >= fromDate;
+                const matchesToDate = !toDate || itemDate <= toDate;
+
+                if (!matchesFromDate || !matchesToDate) {
+                    return false;
+                }
+
+                if (!query) {
+                    return true;
+                }
+
+                const joinedText = [
+                    item.date,
+                    item.location,
+                    item.inv_no,
+                    item.recipient,
+                    item.udise,
+                    item.recipient_address,
+                    item.vehicle_no,
+                    item.ewaybill_no,
+                    item.boys,
+                    item.girls
+                ].join(' ').toLowerCase();
+
+                return joinedText.includes(query);
+            });
+
+            filteredItems = filtered;
+            renderInventory(filteredItems);
+        }
+
+        // Fetch and display inventory
+        async function fetchInventory() {
+            try {
+                const selectedLocations = getSelectedFilterLocations();
+                if (!selectedLocations.length) {
+                    allItems = [];
+                    applyFilter();
+                    return;
+                }
+
+                localStorage.setItem(LOCATION_FILTER_STORAGE_KEY, JSON.stringify(selectedLocations));
+
+                const requests = selectedLocations.map(async (locationName) => {
+                    const params = new URLSearchParams({ location: locationName });
+                    const response = await fetch(`${API_URL}?${params.toString()}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to load records from server.');
+                    }
+
+                    return response.json();
+                });
+
+                const locationRows = await Promise.all(requests);
+                const mergedRows = locationRows.flat();
+                const uniqueRowsMap = new Map();
+
+                mergedRows.forEach((row) => {
+                    uniqueRowsMap.set(Number(row.id), row);
+                });
+
+                allItems = Array.from(uniqueRowsMap.values()).sort((firstRow, secondRow) => {
+                    const dateSort = String(secondRow.date || '').localeCompare(String(firstRow.date || ''));
+                    if (dateSort !== 0) {
+                        return dateSort;
+                    }
+
+                    return Number(secondRow.id) - Number(firstRow.id);
+                });
+                applyFilter();
+                renderCabinSummary(allItems);
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Unable to load records.');
+            }
+        }
+
+        // Add or update item
+        document.getElementById('itemForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            try {
+                const payload = getItemFormData();
+
+                const validationError = validateItemForm(payload);
+                if (validationError) {
+                    alert(validationError.message);
+                    document.getElementById(validationError.field).focus();
+                    return;
+                }
+
+                const url = editingId ? `${API_URL}/${editingId}` : API_URL;
+                const method = editingId ? 'PUT' : 'POST';
+
+                const response = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorPayload = await response.json().catch(() => ({}));
+                    throw new Error(errorPayload.error || 'Unable to save record.');
+                }
+
+                closeRecordModal();
+                await fetchInventory();
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Unable to save record.');
+            }
+        });
+
+        function startEdit(id) {
+            const item = allItems.find((entry) => entry.id === id);
+            if (!item) return;
+
+            document.getElementById('date').value = item.date || '';
+            document.getElementById('inv_no').value = item.inv_no || '';
+            document.getElementById('recipient').value = item.recipient || '';
+            document.getElementById('udise').value = item.udise || '';
+            document.getElementById('recipient_address').value = item.recipient_address || '';
+            document.getElementById('vehicle_no').value = item.vehicle_no || '';
+            document.getElementById('ewaybill_no').value = item.ewaybill_no || '';
+            document.getElementById('boys').value = Number(item.boys) || 0;
+            document.getElementById('girls').value = Number(item.girls) || 0;
+            if (isValidLocation(item.location)) {
+                itemLocationSelect.value = item.location;
+                localStorage.setItem(ITEM_LOCATION_STORAGE_KEY, item.location);
+            }
+
+            editingId = id;
+            recordModalTitle.textContent = 'Edit Record';
+            recordModalSubtitle.textContent = 'Update the selected inventory record';
+            document.getElementById('submitBtn').textContent = 'Update Record';
+            recordModal.style.display = 'flex';
+        }
+
+        // Delete item
+        async function deleteItem(id) {
+            if (confirm('Are you sure you want to remove this record?')) {
+                try {
+                    const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                    if (!response.ok) {
+                        const errorPayload = await response.json().catch(() => ({}));
+                        throw new Error(errorPayload.error || 'Unable to delete record.');
+                    }
+
+                    await fetchInventory();
+                } catch (error) {
+                    console.error(error);
+                    alert(error.message || 'Unable to delete record.');
+                }
+            }
+        }
+
+        function printRow(id) {
+            const item = allItems.find((entry) => entry.id === id);
+            if (!item) return;
+
+            const printWindow = window.open('', '_blank', 'width=900,height=650');
+            if (!printWindow) {
+                alert('Pop-up blocked. Please allow pop-ups to print this record.');
+                return;
+            }
+
+            const rowHtml = `
+                <tr>
+                    <td>${escapeHtml(item.date)}</td>
+                    <td>${escapeHtml(item.location || '')}</td>
+                    <td>${escapeHtml(item.inv_no)}</td>
+                    <td>${escapeHtml(item.recipient)}</td>
+                    <td>${escapeHtml(item.udise)}</td>
+                    <td>${escapeHtml(item.recipient_address)}</td>
+                    <td>${escapeHtml(item.vehicle_no)}</td>
+                    <td>${escapeHtml(item.ewaybill_no)}</td>
+                    <td>${Number(item.boys) || 0}</td>
+                    <td>${Number(item.girls) || 0}</td>
+                </tr>
+            `;
+
+            printWindow.document.write(`
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Print Record</title>
+                    <style>
+                        body { font-family: Segoe UI, Tahoma, sans-serif; padding: 20px; color: #111; }
+                        h2 { margin-top: 0; }
+                        table { width: 100%; border-collapse: collapse; }
+                        th, td { border: 1px solid #bbb; padding: 8px; text-align: left; font-size: 13px; }
+                        th { background: #f3f3f3; }
+                    </style>
+                </head>
+                <body>
+                    <h2>Inventory Record</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DATE</th>
+                                <th>LOCATION/PLANT</th>
+                                <th>INV. NO.</th>
+                                <th>RECIPIENT</th>
+                                <th>UDISE</th>
+                                <th>RECIPIENT ADDRESS</th>
+                                <th>VEHICLE NO</th>
+                                <th>EWAYBILL NO</th>
+                                <th>BOYS</th>
+                                <th>GIRLS</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${rowHtml}
+                        </tbody>
+                    </table>
+                </body>
+                </html>
+            `);
+
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+            printWindow.close();
+        }
+
+        document.getElementById('findBtn').addEventListener('click', applyFilter);
+        openAddRecordBtn.addEventListener('click', openAddRecordModal);
+        closeRecordModalBtn.addEventListener('click', closeRecordModal);
+        cancelRecordBtn.addEventListener('click', closeRecordModal);
+        recordModal.addEventListener('click', (event) => {
+            if (event.target === recordModal) {
+                closeRecordModal();
+            }
+        });
+        document.getElementById('findInput').addEventListener('input', applyFilter);
+        document.getElementById('findInput').addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                applyFilter();
+            }
+        });
+        document.getElementById('clearFindBtn').addEventListener('click', async () => {
+            document.getElementById('findInput').value = '';
+            setSelectedFilterLocations(LOCATIONS);
+            await fetchInventory();
+        });
+
+        fromDateFilterInput.addEventListener('change', applyFilter);
+        toDateFilterInput.addEventListener('change', applyFilter);
+
+        locationDropdownBtn.addEventListener('click', () => {
+            const isHidden = locationDropdownMenu.hasAttribute('hidden');
+            if (isHidden) {
+                locationDropdownMenu.removeAttribute('hidden');
+            } else {
+                locationDropdownMenu.setAttribute('hidden', 'hidden');
+            }
+        });
+
+        document.addEventListener('click', (event) => {
+            if (!document.getElementById('locationMultiSelect').contains(event.target)) {
+                locationDropdownMenu.setAttribute('hidden', 'hidden');
+            }
+        });
+
+        locationSelectAllCheckbox.addEventListener('change', async () => {
+            if (locationSelectAllCheckbox.checked) {
+                setSelectedFilterLocations(LOCATIONS);
+            } else {
+                setSelectedFilterLocations([]);
+            }
+
+            await fetchInventory();
+        });
+
+        itemLocationSelect.addEventListener('change', () => {
+            localStorage.setItem(ITEM_LOCATION_STORAGE_KEY, itemLocationSelect.value);
+        });
+
+        importExcelBtn.addEventListener('click', () => importExcelInput.click());
+
+        importExcelInput.addEventListener('change', async () => {
+            const [file] = importExcelInput.files;
+            importExcelInput.value = '';
+            if (!file) return;
+
+            if (typeof XLSX === 'undefined') {
+                alert('Excel import library failed to load. Please refresh and try again.');
+                return;
+            }
+
+            try {
+                const workbook = XLSX.read(await file.arrayBuffer(), { type: 'array' });
+                const sheet = workbook.Sheets[workbook.SheetNames[0]];
+                const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+                if (!rows.length) throw new Error('The selected file has no data rows.');
+
+                const getValue = (row, key) => row[key] ?? row[key.replace(/\./g, '')] ?? '';
+                const records = rows.map((row) => ({
+                    date: String(getValue(row, 'DATE')).trim(),
+                    location: normalizeLocationName(getValue(row, 'LOCATION/PLANT')),
+                    inv_no: String(getValue(row, 'INV. NO.')).trim(),
+                    recipient: String(getValue(row, 'RECIPIENT')).trim(),
+                    udise: String(getValue(row, 'UDISE')).trim(),
+                    recipient_address: String(getValue(row, 'RECIPIENT ADDRESS')).trim(),
+                    vehicle_no: String(getValue(row, 'VEHICLE NO')).trim(),
+                    ewaybill_no: String(getValue(row, 'EWAYBILL NO')).trim(),
+                    boys: Number(getValue(row, 'BOYS')) || 0,
+                    girls: Number(getValue(row, 'GIRLS')) || 0
+                }));
+
+                const invalidRecord = records.find((record) => !/^\d{4}-\d{2}-\d{2}$/.test(record.date) || !isValidLocation(record.location));
+                if (invalidRecord) throw new Error('Each row requires DATE in YYYY-MM-DD format and a valid LOCATION/PLANT.');
+
+                const invalidFieldRecord = records.map((record) => validateItemForm(record)).find(Boolean);
+                if (invalidFieldRecord) throw new Error(invalidFieldRecord.message);
+
+                for (const record of records) {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(record)
+                    });
+                    if (!response.ok) {
+                        const payload = await response.json().catch(() => ({}));
+                        throw new Error(payload.error || 'Unable to import a dispatch record.');
+                    }
+                }
+
+                await fetchInventory();
+                alert(`${records.length} dispatch record(s) imported.`);
+            } catch (error) {
+                console.error(error);
+                alert(error.message || 'Unable to import dispatch records.');
+            }
+        });
+
+        document.getElementById('exportExcelBtn').addEventListener('click', () => {
+            if (!filteredItems.length) {
+                alert('No records available to export for selected filters.');
+                return;
+            }
+
+            if (typeof XLSX === 'undefined') {
+                alert('Excel export library failed to load. Please refresh and try again.');
+                return;
+            }
+
+            const exportRows = filteredItems.map((item) => ({
+                'DATE': item.date || '',
+                'LOCATION/PLANT': item.location || '',
+                'INV. NO.': item.inv_no || '',
+                'RECIPIENT': item.recipient || '',
+                'UDISE': item.udise || '',
+                'RECIPIENT ADDRESS': item.recipient_address || '',
+                'VEHICLE NO': item.vehicle_no || '',
+                'EWAYBILL NO': item.ewaybill_no || '',
+                'BOYS': Number(item.boys) || 0,
+                'GIRLS': Number(item.girls) || 0
+            }));
+
+            const worksheet = XLSX.utils.json_to_sheet(exportRows);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, 'Inventory');
+
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-');
+            XLSX.writeFile(workbook, `inventory-records-${timestamp}.xlsx`);
+        });
+
+        // Load inventory on startup
+        window.onload = async () => {
+            initializeLocationOptions();
+            const currentMonth = getCurrentMonthRange();
+            fromDateFilterInput.value = currentMonth.from;
+            toDateFilterInput.value = currentMonth.to;
+            await fetchInventory();
+        };
+    </script>
+</body>
+</html>

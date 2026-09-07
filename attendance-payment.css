@@ -1,0 +1,1303 @@
+/* =========================================
+   GLOBAL
+========================================= */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #f5f7fb;
+    color: #1f2937;
+}
+
+.page-container {
+    width: 100%;
+    max-width: 1600px;
+    margin: auto;
+    padding: 24px;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 24px;
+}
+
+.page-header h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #111827;
+}
+
+.page-header p {
+    margin-top: 5px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.month-selector {
+    height: 40px;
+    padding: 0 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+
+    background: white;
+    color: #374151;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.btn {
+    height: 40px;
+
+    padding: 0 16px;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.btn-primary {
+    background: #2563eb;
+    border: 1px solid #2563eb;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #1d4ed8;
+}
+
+.btn-outline {
+    background: white;
+    border: 1px solid #d1d5db;
+    color: #374151;
+}
+
+.btn-outline:hover {
+    background: #f3f4f6;
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(6, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 20px;
+}
+
+.summary-card {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    box-shadow:
+        0 2px 5px rgba(0, 0, 0, 0.03);
+}
+
+.summary-icon {
+    width: 42px;
+    height: 42px;
+
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+}
+
+.employee-icon {
+    background: #eff6ff;
+}
+
+.present-icon {
+    background: #ecfdf5;
+}
+
+.days-icon {
+    background: #f5f3ff;
+}
+
+.payable-icon {
+    background: #fff7ed;
+}
+
+.paid-icon {
+    background: #ecfdf5;
+}
+
+.due-icon {
+    background: #fef2f2;
+}
+
+.summary-card span {
+    display: block;
+
+    font-size: 12px;
+
+    color: #6b7280;
+
+    margin-bottom: 4px;
+}
+
+.summary-card strong {
+    font-size: 20px;
+
+    color: #111827;
+}
+
+.due-card strong {
+    color: #dc2626;
+}
+
+
+/* =========================================
+   FILTERS
+========================================= */
+
+.filter-section {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    padding: 14px;
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+}
+
+.search-box {
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    padding: 0 12px;
+
+    height: 40px;
+}
+
+.search-box input {
+    border: none;
+
+    outline: none;
+
+    width: 100%;
+
+    font-size: 14px;
+}
+
+.filter-select {
+    width: 190px;
+
+    height: 40px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 8px;
+
+    padding: 0 12px;
+
+    background: white;
+}
+
+
+/* =========================================
+   ATTENDANCE SECTION
+========================================= */
+
+.attendance-section {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    margin-bottom: 20px;
+
+    overflow: hidden;
+}
+
+.table-header {
+    padding: 18px 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table-header h2 {
+    font-size: 18px;
+}
+
+.table-header p {
+    color: #6b7280;
+
+    font-size: 13px;
+
+    margin-top: 4px;
+}
+
+.legend {
+    display: flex;
+
+    gap: 18px;
+
+    font-size: 12px;
+
+    color: #6b7280;
+}
+
+.legend span {
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    display: inline-block;
+}
+
+.legend-dot.present {
+    background: #16a34a;
+}
+
+.legend-dot.absent {
+    background: #dc2626;
+}
+
+.legend-dot.leave {
+    background: #f59e0b;
+}
+
+
+/* =========================================
+   TABLE
+========================================= */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+.attendance-table {
+    width: 100%;
+
+    min-width: 1100px;
+
+    border-collapse: collapse;
+
+    font-size: 13px;
+}
+
+.attendance-table th {
+    background: #f9fafb;
+
+    color: #6b7280;
+
+    font-weight: 600;
+
+    height: 42px;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    text-align: center;
+}
+
+.attendance-table td {
+    height: 58px;
+
+    border-bottom: 1px solid #f1f3f5;
+
+    text-align: center;
+}
+
+.employee-column {
+    text-align: left !important;
+
+    padding-left: 20px;
+
+    min-width: 210px;
+}
+
+.employee-name {
+    text-align: left !important;
+
+    padding-left: 20px;
+}
+
+.employee-info {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.avatar {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    background: #e0e7ff;
+
+    color: #3730a3;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.employee-info strong {
+    display: block;
+
+    font-size: 13px;
+}
+
+.employee-info small {
+    display: block;
+
+    margin-top: 2px;
+
+    font-size: 11px;
+
+    color: #9ca3af;
+}
+
+
+/* =========================================
+   ATTENDANCE STATUS
+========================================= */
+
+.status {
+    width: 26px;
+    height: 26px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.7), inset 0 -2px 0 rgba(0, 0, 0, 0.08), 0 2px 3px rgba(16, 24, 40, 0.16);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.status.present {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status.absent {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.status.leave {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.employee-row {
+    cursor: pointer;
+
+    transition: 0.15s;
+}
+
+.employee-row:hover {
+    background: #f8fafc;
+}
+
+.employee-row.selected {
+    background: #eff6ff;
+}
+
+.rate {
+    font-weight: 600;
+}
+
+.total {
+    font-weight: 700;
+}
+
+.due {
+    color: #dc2626;
+
+    font-weight: 600;
+}
+
+.paid-status {
+    color: #16a34a;
+
+    font-weight: 600;
+}
+
+
+/* =========================================
+   EMPLOYEE DETAILS
+========================================= */
+
+.employee-details {
+    background: white;
+
+    border: 1px solid #e5e7eb;
+
+    border-radius: 12px;
+
+    overflow: hidden;
+}
+
+.details-header {
+    padding: 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.selected-employee {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.large-avatar {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 50%;
+
+    background: #e0e7ff;
+
+    color: #3730a3;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: 700;
+}
+
+.selected-employee h2 {
+    font-size: 18px;
+}
+
+.selected-employee p {
+    color: #6b7280;
+
+    font-size: 12px;
+
+    margin-top: 4px;
+}
+
+.employee-summary {
+    display: flex;
+
+    gap: 35px;
+}
+
+.employee-summary span {
+    display: block;
+
+    color: #6b7280;
+
+    font-size: 11px;
+
+    margin-bottom: 4px;
+}
+
+.employee-summary strong {
+    font-size: 16px;
+}
+
+.text-danger {
+    color: #dc2626;
+}
+
+
+/* =========================================
+   DAILY RECORDS
+========================================= */
+
+.daily-records {
+    padding: 20px;
+}
+
+.daily-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-bottom: 14px;
+}
+
+.daily-header h3 {
+    font-size: 16px;
+}
+
+
+/* =========================================
+   DAILY TABLE
+========================================= */
+
+.daily-table-wrapper {
+    overflow-x: auto;
+}
+
+.daily-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    font-size: 13px;
+}
+
+.daily-table th {
+    background: #f9fafb;
+
+    text-align: left;
+
+    padding: 12px;
+
+    color: #6b7280;
+
+    font-size: 12px;
+
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.daily-table td {
+    padding: 11px 12px;
+
+    border-bottom: 1px solid #f1f3f5;
+}
+
+.daily-table tr:hover {
+    background: #fafafa;
+}
+
+
+/* =========================================
+   BADGES
+========================================= */
+
+.status-badge {
+    display: inline-block;
+
+    padding: 5px 9px;
+
+    border-radius: 6px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.7), inset 0 -2px 0 rgba(0, 0, 0, 0.08), 0 2px 3px rgba(16, 24, 40, 0.16);
+}
+
+.present-badge {
+    background: #dcfce7;
+
+    color: #15803d;
+}
+
+.absent-badge {
+    background: #fee2e2;
+
+    color: #dc2626;
+}
+
+.leave-badge {
+    background: #fef3c7;
+
+    color: #d97706;
+}
+
+.pending-badge {
+    background: #eff6ff;
+
+    color: #1d4ed8;
+}
+
+
+/* =========================================
+   INPUTS
+========================================= */
+
+.rate-input,
+.hours-input {
+    width: 90px;
+
+    height: 34px;
+
+    padding: 0 8px;
+
+    border: 1px solid #d1d5db;
+
+    border-radius: 6px;
+
+    outline: none;
+
+    font-size: 13px;
+}
+
+.rate-input:focus,
+.hours-input:focus {
+    border-color: #2563eb;
+
+    box-shadow:
+        0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.daily-pay {
+    font-weight: 700;
+}
+
+
+/* =========================================
+   ACTIONS
+========================================= */
+
+.details-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding: 16px 20px;
+
+    border-top: 1px solid #e5e7eb;
+
+    background: #fafafa;
+}
+
+.employee-link {
+    color: #1267d9;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+}
+
+.attendance-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 14px 20px;
+    border-top: 1px solid #e5e7eb;
+    color: #667085;
+    font-size: 13px;
+}
+
+.attendance-pagination .btn:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.45);
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.employee-details-dialog {
+    position: relative;
+    width: min(1100px, 100%);
+    max-height: calc(100vh - 40px);
+    overflow: auto;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+}
+
+.modal-close {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    z-index: 1;
+    width: 32px;
+    height: 32px;
+    border: 0;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #344054;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.modal-open {
+    overflow: hidden;
+}
+
+.employee-form-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.45);
+}
+
+.employee-form-overlay[hidden] {
+    display: none;
+}
+
+.employee-form {
+    position: relative;
+    width: min(420px, 100%);
+    padding: 24px;
+    border-radius: 12px;
+    background: #ffffff;
+    box-shadow: 0 20px 50px rgba(15, 23, 42, 0.2);
+}
+
+.employee-form h2 {
+    margin-bottom: 18px;
+    font-size: 20px;
+}
+
+.employee-form label {
+    display: block;
+    margin-top: 12px;
+    color: #667085;
+    font-size: 12px;
+}
+
+.employee-form input {
+    display: block;
+    width: 100%;
+    height: 38px;
+    margin-top: 5px;
+    padding: 0 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font: inherit;
+}
+
+.employee-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.date-input {
+    min-width: 125px;
+    border: 0;
+    color: #344054;
+    font: inherit;
+}
+
+.remarks-input {
+    width: 140px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 7px 8px;
+}
+
+.day-status {
+    border: 0;
+    cursor: pointer;
+}
+
+.empty-status,
+.empty-day-box {
+    display: inline-block;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.9), inset 0 -2px 0 rgba(0, 0, 0, 0.05), 0 2px 3px rgba(16, 24, 40, 0.12);
+}
+
+.empty-day-box {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+}
+
+.holiday,
+.holiday-badge {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.legend-dot.holiday {
+    background: #f59e0b;
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 1200px) {
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .employee-summary {
+        gap: 18px;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .page-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .header-actions {
+        width: 100%;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .filter-section {
+        flex-wrap: wrap;
+    }
+
+    .search-box {
+        flex-basis: 100%;
+    }
+
+    .details-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 20px;
+    }
+
+    .employee-summary {
+        width: 100%;
+
+        justify-content: space-between;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .page-container {
+        padding: 12px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header-actions {
+        flex-wrap: wrap;
+    }
+
+    .filter-select {
+        width: 100%;
+    }
+
+    .employee-summary {
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 15px;
+    }
+
+    .details-actions {
+        flex-direction: column;
+    }
+
+    .details-actions .btn {
+        width: 100%;
+    }
+
+}
+
+:root {
+    --attendance-primary: #1267d9;
+    --attendance-primary-dark: #0d4fa8;
+    --attendance-text-dark: #16213d;
+    --attendance-text: #344054;
+    --attendance-text-light: #667085;
+    --attendance-border: #e4e7ec;
+    --attendance-background: #f6f8fc;
+    --attendance-green: #0b9b72;
+    --attendance-purple: #7138d9;
+    --attendance-orange: #ef8a00;
+    --attendance-shadow: 0 2px 8px rgba(16, 24, 40, 0.05);
+    --attendance-shadow-hover: 0 8px 25px rgba(16, 24, 40, 0.09);
+}
+
+body {
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: var(--attendance-text-dark);
+    background: var(--attendance-background);
+}
+
+.attendance-toast {
+    position: fixed;
+    right: 24px;
+    bottom: 24px;
+    z-index: 10;
+    padding: 12px 16px;
+    border-radius: 8px;
+    background: #16213d;
+    color: #ffffff;
+    box-shadow: 0 8px 24px rgba(16, 24, 40, 0.18);
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.attendance-toast.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.page-container {
+    max-width: none;
+    padding: 0 18px 30px;
+}
+
+.page-header {
+    min-height: 82px;
+    margin: 0 -18px 18px;
+    padding: 14px 24px;
+    gap: 20px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--attendance-border);
+}
+
+.page-header h1 {
+    color: #14213d;
+    font-size: 23px;
+    line-height: 1.2;
+}
+
+.page-header p {
+    margin-top: 4px;
+    color: var(--attendance-text-light);
+    font-size: 13px;
+}
+
+.header-actions {
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.month-selector,
+.year-selector,
+.btn {
+    height: 34px;
+    border-radius: 6px;
+    font-size: 13px;
+}
+
+.month-selector,
+.year-selector {
+    padding: 0 10px;
+    border-color: #d0d5dd;
+    color: var(--attendance-text);
+}
+
+.btn {
+    padding: 0 13px;
+    font-weight: 600;
+    transition: all 0.18s ease;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--attendance-shadow);
+}
+
+.btn-primary {
+    background: var(--attendance-primary);
+    border-color: var(--attendance-primary);
+}
+
+.btn-primary:hover {
+    background: var(--attendance-primary-dark);
+}
+
+.btn-outline {
+    background: #e9f8f2;
+    border-color: #c8eee1;
+    color: #087b5e;
+}
+
+.summary-grid {
+    grid-template-columns: repeat(6, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.summary-card,
+.filter-section,
+.attendance-section,
+.employee-details {
+    border: 1px solid var(--attendance-border);
+    border-radius: 8px;
+    box-shadow: var(--attendance-shadow);
+}
+
+.summary-card {
+    min-height: 105px;
+    padding: 16px;
+    gap: 15px;
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.summary-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--attendance-shadow-hover);
+}
+
+.summary-icon {
+    width: 57px;
+    height: 57px;
+    flex: 0 0 57px;
+    border-radius: 50%;
+    font-size: 22px;
+}
+
+.employee-icon { color: var(--attendance-primary); }
+.present-icon { color: var(--attendance-green); }
+.days-icon { color: var(--attendance-purple); }
+.payable-icon { color: var(--attendance-orange); }
+.paid-icon { color: var(--attendance-green); }
+.due-icon { color: #e5484d; }
+
+.summary-card span {
+    color: var(--attendance-text);
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.summary-card strong {
+    font-size: 23px;
+    line-height: 1.15;
+    color: #14213d;
+}
+
+.filter-section {
+    padding: 14px 18px;
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.search-box,
+.filter-select {
+    height: 36px;
+    border-radius: 5px;
+    border-color: #d0d5dd;
+}
+
+.search-box input,
+.filter-select {
+    font-size: 12px;
+}
+
+.attendance-section,
+.employee-details {
+    margin-bottom: 16px;
+}
+
+.table-header,
+.details-header {
+    padding: 12px 14px;
+    border-bottom-color: #eef0f4;
+}
+
+.table-header h2,
+.selected-employee h2 {
+    color: #17233f;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.table-header p,
+.selected-employee p {
+    color: var(--attendance-text-light);
+    font-size: 11px;
+}
+
+.attendance-table th,
+.daily-table th {
+    background: #123d70;
+    color: #ffffff;
+    font-size: 10px;
+}
+
+.attendance-table th {
+    height: 36px;
+}
+
+.attendance-table td,
+.daily-table td {
+    border-bottom-color: #edf0f4;
+    font-size: 12px;
+}
+
+.attendance-table td {
+    height: 52px;
+}
+
+.daily-records {
+    padding: 14px;
+}
+
+.daily-header h3 {
+    color: #17233f;
+    font-size: 14px;
+}
+
+.employee-summary {
+    gap: 25px;
+}
+
+.employee-summary span,
+.daily-table th {
+    color: var(--attendance-text-light);
+}
+
+.daily-table th {
+    background: #f8fafc;
+    padding: 10px 12px;
+}
+
+.daily-table td {
+    padding: 10px 12px;
+}
+
+.rate-input,
+.hours-input {
+    height: 34px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.details-actions {
+    padding: 12px 14px;
+    border-top-color: #eef0f4;
+    background: #fafafa;
+}

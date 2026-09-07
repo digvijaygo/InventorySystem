@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Inventory System - Dashboard</title>
+
+    <link rel="stylesheet" href="dashboard.css">
+
+    <!-- Google Font -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+</head>
+
+<body>
+
+<main class="dashboard-main">
+    <section class="content">
+
+
+            <!-- ================= STAT CARDS ================= -->
+
+            <div class="stats-grid">
+
+
+                <!-- TOTAL PRODUCTS -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon blue">
+                        📦
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>Total Products</span>
+
+                        <h2>1,248</h2>
+
+                        <p class="positive">
+                            ↑ 12.5%
+                            <span>from last month</span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TOTAL STOCK -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon green">
+                        ◈
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>Total Stock (Units)</span>
+
+                        <h2>18,532</h2>
+
+                        <p class="positive">
+                            ↑ 8.3%
+                            <span>from last month</span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STOCK IN -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon orange">
+                        🛒
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>Stock In (This Month)</span>
+
+                        <h2>2,456</h2>
+
+                        <p class="positive">
+                            ↑ 15.2%
+                            <span>from last month</span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STOCK OUT -->
+
+                <div class="stat-card">
+
+                    <div class="stat-icon red">
+                        ⇥
+                    </div>
+
+                    <div class="stat-info">
+
+                        <span>Stock Out (This Month)</span>
+
+                        <h2>1,732</h2>
+
+                        <p class="negative">
+                            ↓ 6.7%
+                            <span>from last month</span>
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= CHART ROW ================= -->
+
+            <div class="charts-grid">
+
+
+                <!-- STOCK OVERVIEW -->
+
+                <div class="panel stock-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>Stock Overview</h3>
+                        </div>
+
+                        <select>
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                            <option>Last 3 Months</option>
+                            <option>This Year</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="legend">
+
+                        <span>
+                            <i class="legend-dot stock-in"></i>
+                            Stock In
+                        </span>
+
+                        <span>
+                            <i class="legend-dot stock-out"></i>
+                            Stock Out
+                        </span>
+
+                    </div>
+
+
+                    <div class="chart">
+
+                        <div class="y-axis">
+
+                            <span>1000</span>
+                            <span>800</span>
+                            <span>600</span>
+                            <span>400</span>
+                            <span>200</span>
+                            <span>0</span>
+
+                        </div>
+
+                        <div class="graph-area">
+
+                            <div class="grid-line line-1"></div>
+                            <div class="grid-line line-2"></div>
+                            <div class="grid-line line-3"></div>
+                            <div class="grid-line line-4"></div>
+                            <div class="grid-line line-5"></div>
+
+                            <!-- SVG GRAPH -->
+
+                            <svg
+                                class="line-chart"
+                                viewBox="0 0 800 280"
+                                preserveAspectRatio="none"
+                            >
+
+                                <!-- Stock In area -->
+
+                                <polygon
+                                    class="stock-in-area"
+                                    points="
+                                    0,150
+                                    35,120
+                                    70,130
+                                    105,95
+                                    140,125
+                                    175,110
+                                    210,120
+                                    245,115
+                                    280,145
+                                    315,120
+                                    350,110
+                                    385,90
+                                    420,125
+                                    455,65
+                                    490,75
+                                    525,100
+                                    560,150
+                                    595,115
+                                    630,130
+                                    665,100
+                                    700,80
+                                    735,110
+                                    770,65
+                                    800,145
+                                    800,280
+                                    0,280
+                                    "
+                                />
+
+                                <!-- Stock Out area -->
+
+                                <polygon
+                                    class="stock-out-area"
+                                    points="
+                                    0,205
+                                    35,180
+                                    70,190
+                                    105,175
+                                    140,195
+                                    175,180
+                                    210,180
+                                    245,175
+                                    280,205
+                                    315,190
+                                    350,175
+                                    385,155
+                                    420,180
+                                    455,125
+                                    490,125
+                                    525,145
+                                    560,195
+                                    595,165
+                                    630,145
+                                    665,160
+                                    700,140
+                                    735,155
+                                    770,130
+                                    800,195
+                                    800,280
+                                    0,280
+                                    "
+                                />
+
+                                <!-- Stock In Line -->
+
+                                <polyline
+                                    class="stock-in-line"
+                                    points="
+                                    0,150
+                                    35,120
+                                    70,130
+                                    105,95
+                                    140,125
+                                    175,110
+                                    210,120
+                                    245,115
+                                    280,145
+                                    315,120
+                                    350,110
+                                    385,90
+                                    420,125
+                                    455,65
+                                    490,75
+                                    525,100
+                                    560,150
+                                    595,115
+                                    630,130
+                                    665,100
+                                    700,80
+                                    735,110
+                                    770,65
+                                    800,145
+                                    "
+                                />
+
+                                <!-- Stock Out Line -->
+
+                                <polyline
+                                    class="stock-out-line"
+                                    points="
+                                    0,205
+                                    35,180
+                                    70,190
+                                    105,175
+                                    140,195
+                                    175,180
+                                    210,180
+                                    245,175
+                                    280,205
+                                    315,190
+                                    350,175
+                                    385,155
+                                    420,180
+                                    455,125
+                                    490,125
+                                    525,145
+                                    560,195
+                                    595,165
+                                    630,145
+                                    665,160
+                                    700,140
+                                    735,155
+                                    770,130
+                                    800,195
+                                    "
+                                />
+
+                            </svg>
+
+
+                            <div class="x-axis">
+
+                                <span>May 1</span>
+                                <span>May 6</span>
+                                <span>May 11</span>
+                                <span>May 16</span>
+                                <span>May 21</span>
+                                <span>May 26</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TOP CATEGORIES -->
+
+                <div class="panel category-panel">
+
+                    <div class="panel-header">
+
+                        <h3>Top Categories</h3>
+
+                    </div>
+
+
+                    <div class="category-content">
+
+                        <div class="donut">
+
+                            <div class="donut-hole">
+                                <strong>100%</strong>
+                                <span>Stock</span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="category-list">
+
+                            <div>
+                                <span>
+                                    <i class="category-dot electronics"></i>
+                                    Electronics
+                                </span>
+                                <strong>35%</strong>
+                            </div>
+
+                            <div>
+                                <span>
+                                    <i class="category-dot stationery"></i>
+                                    Stationery
+                                </span>
+                                <strong>25%</strong>
+                            </div>
+
+                            <div>
+                                <span>
+                                    <i class="category-dot furniture"></i>
+                                    Furniture
+                                </span>
+                                <strong>20%</strong>
+                            </div>
+
+                            <div>
+                                <span>
+                                    <i class="category-dot accessories"></i>
+                                    Accessories
+                                </span>
+                                <strong>15%</strong>
+                            </div>
+
+                            <div>
+                                <span>
+                                    <i class="category-dot others"></i>
+                                    Others
+                                </span>
+                                <strong>5%</strong>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BOTTOM SECTION ================= -->
+
+            <div class="bottom-grid">
+
+
+                <!-- LOW STOCK -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h3>Low Stock Alerts</h3>
+
+                        <a href="#">View All</a>
+
+                    </div>
+
+
+                    <div class="stock-list">
+
+
+                        <div class="stock-item">
+
+                            <div class="product-image">
+                                🖨️
+                            </div>
+
+                            <div class="product-details">
+
+                                <strong>HP LaserJet Pro MFP</strong>
+
+                                <span>SKU: ELEC-0012</span>
+
+                            </div>
+
+                            <div class="stock-count">
+
+                                <strong>5</strong>
+                                <span>units left</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="stock-item">
+
+                            <div class="product-image">
+                                📄
+                            </div>
+
+                            <div class="product-details">
+
+                                <strong>A4 Copy Paper (500)</strong>
+
+                                <span>SKU: STAT-0003</span>
+
+                            </div>
+
+                            <div class="stock-count">
+
+                                <strong>8</strong>
+                                <span>units left</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="stock-item">
+
+                            <div class="product-image">
+                                🪑
+                            </div>
+
+                            <div class="product-details">
+
+                                <strong>Office Chair</strong>
+
+                                <span>SKU: FURN-0007</span>
+
+                            </div>
+
+                            <div class="stock-count">
+
+                                <strong>3</strong>
+                                <span>units left</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="stock-item">
+
+                            <div class="product-image">
+                                🔌
+                            </div>
+
+                            <div class="product-details">
+
+                                <strong>USB Type-C Cable</strong>
+
+                                <span>SKU: ACC-0011</span>
+
+                            </div>
+
+                            <div class="stock-count">
+
+                                <strong>6</strong>
+                                <span>units left</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RECENT TRANSACTIONS -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <h3>Recent Transactions</h3>
+
+                        <a href="#">View All</a>
+
+                    </div>
+
+
+                    <div class="transactions">
+
+
+                        <div class="transaction">
+
+                            <div class="transaction-type in">
+                                IN
+                            </div>
+
+                            <div class="transaction-details">
+
+                                <strong>Stock In - Logitech Mouse</strong>
+
+                                <span>Supplier: Tech Supplies Co.</span>
+
+                            </div>
+
+                            <div class="transaction-right">
+
+                                <strong>50</strong>
+                                <span>May 27, 2025</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="transaction">
+
+                            <div class="transaction-type out">
+                                OUT
+                            </div>
+
+                            <div class="transaction-details">
+
+                                <strong>Stock Out - Keyboard</strong>
+
+                                <span>Customer: Office Mart</span>
+
+                            </div>
+
+                            <div class="transaction-right">
+
+                                <strong>20</strong>
+                                <span>May 27, 2025</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="transaction">
+
+                            <div class="transaction-type in">
+                                IN
+                            </div>
+
+                            <div class="transaction-details">
+
+                                <strong>Stock In - A4 Copy Paper</strong>
+
+                                <span>Supplier: Paper World</span>
+
+                            </div>
+
+                            <div class="transaction-right">
+
+                                <strong>100</strong>
+                                <span>May 26, 2025</span>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="transaction">
+
+                            <div class="transaction-type out">
+                                OUT
+                            </div>
+
+                            <div class="transaction-details">
+
+                                <strong>Stock Out - Printer Ink</strong>
+
+                                <span>Customer: PrintHub</span>
+
+                            </div>
+
+                            <div class="transaction-right">
+
+                                <strong>10</strong>
+                                <span>May 26, 2025</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STOCK VALUE -->
+
+                <div class="panel stock-value-panel">
+
+                    <div class="panel-header">
+
+                        <h3>Stock Value</h3>
+
+                        <select>
+                            <option>This Month</option>
+                            <option>Last Month</option>
+                        </select>
+
+                    </div>
+
+
+                    <div class="stock-value">
+
+                        <h2>₹ 12,45,680</h2>
+
+                        <span>Total Inventory Value</span>
+
+                        <p>
+                            ↑ 9.4%
+                            <small>from last month</small>
+                        </p>
+
+                    </div>
+
+
+                    <div class="mini-chart">
+
+                        <svg
+                            viewBox="0 0 500 160"
+                            preserveAspectRatio="none"
+                        >
+
+                            <polygon
+                                class="mini-area"
+                                points="
+                                0,145
+                                40,115
+                                80,125
+                                120,95
+                                160,100
+                                200,65
+                                240,55
+                                280,110
+                                320,95
+                                360,70
+                                400,100
+                                440,50
+                                480,20
+                                500,30
+                                500,160
+                                0,160
+                                "
+                            />
+
+                            <polyline
+                                class="mini-line"
+                                points="
+                                0,145
+                                40,115
+                                80,125
+                                120,95
+                                160,100
+                                200,65
+                                240,55
+                                280,110
+                                320,95
+                                360,70
+                                400,100
+                                440,50
+                                480,20
+                                500,30
+                                "
+                            />
+
+                        </svg>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+    </section>
+</main>
+
+</body>
+</html>

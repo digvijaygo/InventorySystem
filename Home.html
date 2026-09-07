@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anil & Arneel Industries | Pre-Fabricated Infrastructure</title>
+    <link rel="stylesheet" href="home-landing.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <h1>ANIL & ARNEEL <span>INDUSTRIES</span></h1>
+            </div>
+
+            <div class="nav-right-group">
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#home">Home</a></li>
+                    <li class="nav-item"><a href="#capabilities">Capabilities</a></li>
+                    <li class="nav-item"><a href="#plants">Our Plants</a></li>
+                </ul>
+                <button class="nav-btn" onclick="openContactModal()">Contact Us</button>
+                <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="container hero-content">
+            <h2>From Aspirations to Achievements<br>Nurturing Ideal Realities</h2>
+            <p>
+                Engineered excellence across multi-regional production plants.
+                Supplying high-durability, scalable, and rapidly deployable
+                modular utilities built to international structural safety benchmarks.
+            </p>
+        </div>
+    </header>
+
+    <section id="capabilities" class="services section-padding">
+        <div class="container">
+            <h2 class="section-title">Core Capabilities</h2>
+            <p class="section-subtitle">
+                End-to-end pre-fabrication capabilities designed for durable,
+                scalable and rapidly deployable infrastructure solutions.
+            </p>
+
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏗️</div>
+                    <h3>Pre-fabricated Sanitary Blocks</h3>
+                    <p>
+                        Heavy-duty, fully ready-to-integrate public and commercial
+                        sanitation layouts prioritizing resource efficiency,
+                        robust modern design, and minimal field assembly dependencies.
+                    </p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">⚙️</div>
+                    <h3>Modular Public Utilities</h3>
+                    <p>
+                        Precision-molded utility frameworks designed to survive
+                        harsh weather elements while maintaining strict regulatory
+                        public hygiene compliance criteria.
+                    </p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🏭</div>
+                    <h3>Industrial Engineering</h3>
+                    <p>
+                        Scalable custom pre-fabrication workflows tailored for rapid
+                        corporate infrastructure rollouts, real-estate sectors,
+                        and large-scale government infrastructure works.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="plants" class="section-padding plants-section">
+        <div class="container">
+            <h2 class="section-title">Our Plants</h2>
+            <p class="section-subtitle">
+                Multi-location manufacturing and engineering facilities supporting
+                fabrication, assembly, production, logistics and quality inspection.
+            </p>
+
+            <div class="plants-grid">
+                <div class="plant-card">
+                    <div class="plant-header">
+                        <h3>Arneel Industries</h3>
+                        <span class="plant-badge">Primary Plant</span>
+                    </div>
+                    <div class="plant-body">
+                        <ul class="plant-details">
+                            <li><strong>Location</strong> Karodi Hub</li>
+                            <li><strong>Function</strong> Structural Engineering &amp; Core Fabrication Base</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="plant-card">
+                    <div class="plant-header">
+                        <h3>Anil Industries</h3>
+                        <span class="plant-badge">Assembly Hub</span>
+                    </div>
+                    <div class="plant-body">
+                        <ul class="plant-details">
+                            <li><strong>Location</strong> Karodi Complex</li>
+                            <li><strong>Function</strong> Heavy Raw Material Matrix &amp; Parts Pressing</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="plant-card">
+                    <div class="plant-header">
+                        <h3>Anil Industries</h3>
+                        <span class="plant-badge">Production Node</span>
+                    </div>
+                    <div class="plant-body">
+                        <ul class="plant-details">
+                            <li><strong>Location</strong> Ghanegoan Center</li>
+                            <li><strong>Function</strong> High-Volume Sanitation Component Molding</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="plant-card">
+                    <div class="plant-header">
+                        <h3>Anil Industries</h3>
+                        <span class="plant-badge">Logistics Node</span>
+                    </div>
+                    <div class="plant-body">
+                        <ul class="plant-details">
+                            <li><strong>Location</strong> Yavatmal Facility</li>
+                            <li><strong>Function</strong> Logistics, Coating, Finishings &amp; Quality Inspection</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="plant-card">
+                    <div class="plant-header">
+                        <h3>Kpr Projections</h3>
+                        <span class="plant-badge">Plant</span>
+                    </div>
+                    <div class="plant-body">
+                        <ul class="plant-details">
+                            <li><strong>Location</strong> Manufacturing Facility</li>
+                            <li><strong>Function</strong> Pre-fabricated Infrastructure Operations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="contactModal" class="modal-overlay" onclick="closeContactModal(event)">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <span class="modal-close" onclick="closeContactModal()">&times;</span>
+            <h3>Contact Us</h3>
+
+            <div class="contact-item">
+                <strong>Company</strong>
+                Anil &amp; Arneel Industries
+            </div>
+
+            <div class="contact-item">
+                <strong>Services</strong>
+                Pre-fabricated Sanitary Facilities &amp; Infrastructure
+            </div>
+
+            <div class="contact-item">
+                <strong>Enquiry</strong>
+                Contact our team for project requirements and quotations.
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Anil &amp; Arneel Industries. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('active');
+        }
+
+        function closeContactModal(event) {
+            if (!event || event.target === document.getElementById('contactModal')) {
+                document.getElementById('contactModal').classList.remove('active');
+            }
+        }
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape') {
+                document.getElementById('contactModal').classList.remove('active');
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const animatedElements = document.querySelectorAll('.service-card, .plant-card');
+
+            const observer = new IntersectionObserver(
+                function (entries, observerRef) {
+                    entries.forEach(function (entry) {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observerRef.unobserve(entry.target);
+                        }
+                    });
+                },
+                {
+                    threshold: 0.15,
+                    rootMargin: '0px 0px -40px 0px'
+                }
+            );
+
+            animatedElements.forEach(function (element) {
+                observer.observe(element);
+            });
+        });
+    </script>
+</body>
+</html>

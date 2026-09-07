@@ -1,0 +1,1905 @@
+/* =========================================================
+   CONTRACTOR PAYMENT DASHBOARD
+========================================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+:root {
+
+    --primary: #1267d9;
+    --primary-dark: #0d4fa8;
+
+    --text-dark: #16213d;
+    --text: #344054;
+    --text-light: #667085;
+
+    --border: #e4e7ec;
+    --background: #f6f8fc;
+    --white: #ffffff;
+
+    --green: #0b9b72;
+    --purple: #7138d9;
+    --orange: #ef8a00;
+    --red: #e5484d;
+
+    --shadow:
+        0 2px 8px rgba(16, 24, 40, 0.05);
+
+    --shadow-hover:
+        0 8px 25px rgba(16, 24, 40, 0.09);
+}
+
+
+html,
+body {
+
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 14px;
+
+    color: var(--text-dark);
+
+    background:
+        #f6f8fc;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.contractor-page {
+
+    width: 100%;
+
+    min-height: 100vh;
+
+    background:
+        #f6f8fc;
+
+    padding-bottom: 30px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.page-header {
+
+    min-height: 82px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid var(--border);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 14px 24px;
+
+    gap: 20px;
+}
+
+
+.header-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    min-width: 0;
+}
+
+
+.header-icon {
+
+    width: 48px;
+
+    height: 48px;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #e6f0ff,
+            #d8e9ff
+        );
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: var(--primary);
+
+    font-size: 25px;
+
+    font-weight: 700;
+}
+
+
+.header-left h1 {
+
+    margin: 0;
+
+    font-size: 23px;
+
+    line-height: 1.2;
+
+    font-weight: 700;
+
+    color: #14213d;
+}
+
+
+.header-left p {
+
+    margin: 4px 0 0;
+
+    color: var(--text-light);
+
+    font-size: 13px;
+}
+
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    justify-content: flex-end;
+}
+
+
+.header-date {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding-right: 14px;
+
+    margin-right: 4px;
+
+    border-right: 1px solid var(--border);
+
+    color: #344054;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.calendar-icon {
+
+    font-size: 15px;
+}
+
+
+.header-action {
+
+    border-radius: 6px;
+
+    height: 34px;
+
+    padding: 0 13px;
+
+    border: 1px solid transparent;
+
+    background: white;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    transition:
+        all 0.18s ease;
+}
+
+
+.header-action:hover {
+
+    transform: translateY(-1px);
+
+    box-shadow: var(--shadow);
+}
+
+
+.export-btn {
+
+    color: #087b5e;
+
+    background: #e9f8f2;
+
+    border-color: #c8eee1;
+}
+
+.secondary-btn {
+
+    color: #1d4d8f;
+
+    background: #e8f1ff;
+
+    border-color: #cfe2ff;
+}
+
+.secondary-btn:hover {
+
+    background: #dbe9ff;
+}
+
+
+.primary-btn {
+
+    background: var(--primary);
+
+    color: #fff;
+
+    border-color: var(--primary);
+}
+
+
+.primary-btn:hover {
+
+    background: var(--primary-dark);
+}
+
+
+.print-btn {
+
+    color: var(--primary);
+
+    border-color: #8bb7f0;
+}
+
+
+/* =========================================================
+   FILTER CARD
+========================================================= */
+
+.filter-card {
+
+    margin: 18px 18px 16px;
+
+    background: var(--white);
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    box-shadow: var(--shadow);
+
+    padding: 14px 18px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1.6fr
+        1fr
+        1fr
+        auto;
+
+    gap: 14px;
+
+    align-items: end;
+}
+
+
+.filter-item {
+
+    min-width: 0;
+}
+
+
+.filter-item label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #344054;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+
+.filter-item input,
+.filter-item select {
+
+    width: 100%;
+
+    height: 36px;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 5px;
+
+    padding: 0 10px;
+
+    background: white;
+
+    color: #344054;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    outline: none;
+}
+
+
+.filter-item input:focus,
+.filter-item select:focus {
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 2px rgba(18, 103, 217, 0.08);
+}
+
+
+.search-wrapper {
+
+    position: relative;
+}
+
+
+.search-wrapper input {
+
+    padding-right: 35px;
+}
+
+
+.search-icon {
+
+    position: absolute;
+
+    right: 11px;
+
+    top: 8px;
+
+    font-size: 20px;
+
+    color: #667085;
+}
+
+
+.filter-actions {
+
+    display: flex;
+
+    gap: 7px;
+
+    height: 36px;
+}
+
+
+.apply-filter-btn,
+.reset-btn {
+
+    height: 36px;
+
+    border-radius: 5px;
+
+    padding: 0 13px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    transition: 0.18s;
+}
+
+
+.apply-filter-btn {
+
+    border: 1px solid var(--primary);
+
+    background: var(--primary);
+
+    color: white;
+}
+
+
+.apply-filter-btn:hover {
+
+    background: var(--primary-dark);
+}
+
+
+.reset-btn {
+
+    border: 1px solid #d0d5dd;
+
+    background: white;
+
+    color: #475467;
+}
+
+
+.reset-btn:hover {
+
+    background: #f8f9fb;
+}
+
+
+/* =========================================================
+   KPI CARDS
+========================================================= */
+
+.kpi-grid {
+
+    margin: 0 18px 16px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+
+.kpi-card {
+
+    min-height: 105px;
+
+    background: #fff;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    box-shadow: var(--shadow);
+
+    padding: 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    transition:
+        box-shadow 0.2s,
+        transform 0.2s;
+}
+
+
+.kpi-card:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-hover);
+}
+
+
+.kpi-icon {
+
+    width: 57px;
+
+    height: 57px;
+
+    flex: 0 0 57px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 24px;
+
+    font-weight: 700;
+}
+
+
+.blue-icon {
+
+    background: #e5efff;
+
+    color: #1267d9;
+}
+
+
+.green-icon {
+
+    background: #dcf8ee;
+
+    color: #07956d;
+}
+
+
+.purple-icon {
+
+    background: #eee3ff;
+
+    color: #7038db;
+}
+
+
+.orange-icon {
+
+    background: #fff0d9;
+
+    color: #ed8500;
+}
+
+
+.kpi-content {
+
+    min-width: 0;
+}
+
+
+.kpi-label {
+
+    display: block;
+
+    color: #344054;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    margin-bottom: 5px;
+}
+
+
+.kpi-content strong {
+
+    display: block;
+
+    font-size: 23px;
+
+    line-height: 1.15;
+
+    letter-spacing: -0.4px;
+}
+
+
+.contractor-kpi strong {
+
+    color: #14213d;
+}
+
+
+.amount-kpi strong {
+
+    color: var(--green);
+}
+
+
+.payment-kpi strong {
+
+    color: var(--purple);
+}
+
+
+.balance-kpi strong {
+
+    color: var(--orange);
+}
+
+
+.kpi-content small {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #667085;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   COMMON SECTION CARD
+========================================================= */
+
+.section-card {
+
+    margin: 0 18px 16px;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 8px;
+
+    box-shadow: var(--shadow);
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.section-header {
+
+    min-height: 43px;
+
+    padding: 12px 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid #eef0f4;
+}
+
+
+.section-header h2,
+.table-header h2 {
+
+    margin: 0;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #17233f;
+}
+
+
+.section-header h2 span {
+
+    font-size: 11px;
+
+    color: #667085;
+
+    font-weight: 500;
+}
+
+
+.summary-total {
+
+    font-size: 12px;
+
+    color: #344054;
+}
+
+
+.summary-total strong {
+
+    color: #17233f;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   WORK SUMMARY
+========================================================= */
+
+.work-summary-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 0;
+
+    padding: 8px 12px 12px;
+}
+
+
+.work-column {
+
+    padding: 0 10px;
+}
+
+
+.work-column:first-child {
+
+    border-right: 1px solid #edf0f4;
+}
+
+
+.work-row {
+
+    display: grid;
+
+    grid-template-columns:
+        120px
+        1fr
+        42px;
+
+    align-items: center;
+
+    gap: 10px;
+
+    min-height: 34px;
+}
+
+
+.work-name {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #344054;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+}
+
+
+.work-icon {
+
+    width: 19px;
+
+    height: 19px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 13px;
+
+    font-weight: 700;
+}
+
+
+.fabrication {
+
+    color: #4285f4;
+}
+
+
+.cement {
+
+    color: #0d9c7a;
+}
+
+
+.electrical {
+
+    color: #f5a900;
+}
+
+
+.tiles {
+
+    color: #7b4ce5;
+}
+
+
+.plumbing {
+
+    color: #e95191;
+}
+
+
+.door {
+
+    color: #ef7d22;
+}
+
+
+.outer {
+
+    color: #17a5b4;
+}
+
+
+.inner {
+
+    color: #38a91b;
+}
+
+
+.progress-container {
+
+    height: 8px;
+
+    background: #f0f2f5;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+.progress-bar {
+
+    height: 100%;
+
+    border-radius: 20px;
+}
+
+
+.fabrication-bar {
+
+    background: #4285f4;
+}
+
+
+.cement-bar {
+
+    background: #0d9c7a;
+}
+
+
+.electrical-bar {
+
+    background: #f5a900;
+}
+
+
+.tiles-bar {
+
+    background: #7b4ce5;
+}
+
+
+.plumbing-bar {
+
+    background: #e95191;
+}
+
+
+.door-bar {
+
+    background: #ef7d22;
+}
+
+
+.outer-bar {
+
+    background: #17a5b4;
+}
+
+
+.inner-bar {
+
+    background: #38a91b;
+}
+
+
+.work-value {
+
+    text-align: right;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    color: #344054;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.table-header {
+
+    min-height: 55px;
+
+    padding: 10px 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom: 1px solid #eef0f4;
+}
+
+
+.table-header p {
+
+    margin: 3px 0 0;
+
+    color: #667085;
+
+    font-size: 11px;
+}
+
+
+.table-actions {
+
+    display: flex;
+
+    gap: 7px;
+}
+
+
+.table-icon-btn {
+
+    width: 29px;
+
+    height: 29px;
+
+    border-radius: 5px;
+
+    border: 1px solid #d0d5dd;
+
+    background: #fff;
+
+    color: #475467;
+
+    cursor: pointer;
+
+    font-size: 14px;
+}
+
+
+.table-icon-btn:hover {
+
+    background: #f5f7fa;
+}
+
+
+.table-icon-btn.active {
+
+    background: #193e6d;
+
+    color: white;
+
+    border-color: #193e6d;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-container {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    scrollbar-width: thin;
+}
+
+
+#contractorTable {
+
+    width: 100%;
+
+    min-width: 1420px;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    font-size: 11px;
+}
+
+
+#contractorTable thead th {
+
+    height: 36px;
+
+    padding: 7px 8px;
+
+    background: #123d70;
+
+    color: white;
+
+    text-align: center;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    border-right: 1px solid rgba(255,255,255,0.15);
+}
+
+
+#contractorTable thead th:first-child {
+
+    border-top-left-radius: 6px;
+}
+
+
+#contractorTable thead th:last-child {
+
+    border-top-right-radius: 6px;
+
+    border-right: none;
+}
+
+
+#contractorTable tbody td {
+
+    height: 38px;
+
+    padding: 6px 8px;
+
+    text-align: center;
+
+    color: #344054;
+
+    border-right: 1px solid #edf0f4;
+
+    border-bottom: 1px solid #edf0f4;
+
+    white-space: nowrap;
+
+    background: white;
+}
+
+
+#contractorTable tbody tr:hover td {
+
+    background: #f8fbff;
+}
+
+
+#contractorTable tbody td:nth-child(2) {
+
+    text-align: left;
+
+    font-weight: 600;
+
+    color: #17233f;
+}
+
+
+.contractor-column {
+
+    min-width: 125px;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 70px;
+
+    padding: 4px 9px;
+
+    border-radius: 5px;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+
+.status-match {
+
+    background: #dcf8e1;
+
+    color: #16803d;
+}
+
+
+.status-pending {
+
+    background: #fff1d4;
+
+    color: #d97900;
+}
+
+
+.status-mismatch {
+
+    background: #ffe1e1;
+
+    color: #d93035;
+}
+
+
+.status-overpaid {
+
+    background: #ffe0e0;
+
+    color: #d93035;
+}
+
+
+.status-none {
+
+    color: #98a2b3;
+
+    background: transparent;
+}
+
+
+/* =========================================================
+   BALANCE COLORS
+========================================================= */
+
+.balance-positive {
+
+    color: #e67b00 !important;
+
+    font-weight: 700;
+}
+
+
+.balance-zero {
+
+    color: #0b9b72 !important;
+
+    font-weight: 700;
+}
+
+
+.balance-negative {
+
+    color: #df343b !important;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+========================================================= */
+
+.action-buttons {
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.name-link {
+
+    border: none;
+
+    background: transparent;
+
+    color: #1267d9;
+
+    text-decoration: underline;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+}
+
+.name-link:hover {
+
+    color: #0d4fa8;
+}
+
+
+.view-btn {
+
+    width: 25px;
+
+    height: 25px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: #e8f1ff;
+
+    color: #1769d2;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.edit-row-btn,
+.delete-row-btn {
+
+    min-width: 62px;
+
+    height: 30px;
+
+    border-radius: 6px;
+
+    border: 1px solid transparent;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    line-height: 1;
+
+    padding: 0 10px;
+}
+
+.edit-row-btn {
+
+    background: #e8f1ff;
+
+    color: #1769d2;
+
+    border-color: #cfe2ff;
+}
+
+.edit-row-btn:hover {
+
+    background: #d9e8ff;
+}
+
+.delete-row-btn {
+
+    background: #ffe5e5;
+
+    color: #d93035;
+
+    border-color: #ffd2d2;
+}
+
+.delete-row-btn:hover {
+
+    background: #ffdede;
+}
+
+
+.more-btn {
+
+    width: 25px;
+
+    height: 25px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #344054;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+
+.view-btn:hover {
+
+    background: #d9e8ff;
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+.pagination-section {
+
+    min-height: 57px;
+
+    padding: 10px 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+}
+
+
+.pagination-info {
+
+    color: #667085;
+
+    font-size: 11px;
+}
+
+
+.pagination {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+.page-btn {
+
+    min-width: 31px;
+
+    height: 31px;
+
+    padding: 0 7px;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 5px;
+
+    background: white;
+
+    color: #344054;
+
+    cursor: pointer;
+
+    font-size: 12px;
+}
+
+
+.page-btn:hover:not(:disabled) {
+
+    background: #f4f7fb;
+}
+
+
+.page-btn:disabled {
+
+    opacity: 0.4;
+
+    cursor: not-allowed;
+}
+
+
+.page-number {
+
+    min-width: 31px;
+
+    height: 31px;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 5px;
+
+    background: white;
+
+    cursor: pointer;
+
+    color: #344054;
+}
+
+
+.page-number.active {
+
+    color: white;
+
+    background: #1267d9;
+
+    border-color: #1267d9;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(15, 23, 42, 0.48);
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 1000;
+
+    padding: 20px;
+
+    overflow-y: auto;
+}
+
+
+.payment-modal {
+
+    width: min(650px, 100%);
+
+    max-height: calc(100vh - 40px);
+
+    background: white;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.2);
+
+    overflow: auto;
+}
+
+
+.modal-header {
+
+    padding: 18px 20px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.modal-header h2 {
+
+    margin: 0;
+
+    font-size: 18px;
+
+    color: #17233f;
+}
+
+
+.modal-header p {
+
+    margin: 4px 0 0;
+
+    color: #667085;
+
+    font-size: 12px;
+}
+
+
+.modal-close {
+
+    width: 32px;
+
+    height: 32px;
+
+    border-radius: 50%;
+
+    border: 1px solid #d0d5dd;
+
+    background: #ffffff;
+
+    font-size: 22px;
+
+    color: #344054;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    line-height: 1;
+}
+
+.modal-close:hover {
+
+    background: #f8fafc;
+}
+
+.details-table-wrap {
+
+    padding: 14px 20px 20px;
+}
+
+#contractorDetailsTable {
+
+    min-width: 100%;
+}
+
+.details-edit-btn,
+.details-delete-btn {
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 5px 8px;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.details-edit-btn {
+    background: #e8f1ff;
+    border-color: #cfe2ff;
+    color: #1769d2;
+}
+
+.details-delete-btn {
+    background: #ffe5e5;
+    border-color: #ffd2d2;
+    color: #d93035;
+}
+
+
+#paymentForm {
+
+    padding: 20px;
+}
+
+#contractorForm {
+
+    padding: 20px;
+}
+
+
+.form-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr;
+
+    gap: 15px;
+}
+
+
+.form-group label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    color: #344054;
+}
+
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+
+    width: 100%;
+
+    border: 1px solid #d0d5dd;
+
+    border-radius: 6px;
+
+    padding: 9px 10px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+
+.form-group input,
+.form-group select {
+
+    height: 38px;
+}
+
+
+.form-group textarea {
+
+    resize: vertical;
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 2px rgba(18,103,217,0.08);
+}
+
+
+.full-width {
+
+    grid-column: 1 / -1;
+}
+
+
+.modal-footer {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+
+    padding-top: 18px;
+}
+
+
+.modal-cancel,
+.modal-save {
+
+    height: 37px;
+
+    padding: 0 15px;
+
+    border-radius: 5px;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    font-weight: 600;
+}
+
+
+.modal-cancel {
+
+    background: white;
+
+    border: 1px solid #d0d5dd;
+
+    color: #344054;
+}
+
+
+.modal-save {
+
+    background: var(--primary);
+
+    border: 1px solid var(--primary);
+
+    color: white;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .filter-card {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .filter-actions {
+
+        grid-column: span 3;
+
+        justify-content: flex-end;
+    }
+
+    .kpi-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 800px) {
+
+    .page-header {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+
+    .header-right {
+
+        width: 100%;
+
+        justify-content: flex-start;
+    }
+
+
+    .header-date {
+
+        border-right: none;
+
+        padding-right: 0;
+    }
+
+
+    .filter-card {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .filter-actions {
+
+        grid-column: auto;
+
+        justify-content: flex-start;
+    }
+
+
+    .kpi-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .work-summary-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .work-column:first-child {
+
+        border-right: none;
+
+        border-bottom: 1px solid #edf0f4;
+
+        padding-bottom: 8px;
+
+        margin-bottom: 5px;
+    }
+
+
+    .form-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .full-width {
+
+        grid-column: auto;
+    }
+
+
+    .pagination-section {
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .modal-overlay {
+
+        align-items: flex-start;
+
+        padding: 10px;
+    }
+
+    .payment-modal {
+
+        max-height: calc(100vh - 20px);
+    }
+}
+
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+    body {
+
+        background: white;
+    }
+
+
+    .page-header {
+
+        border-bottom: 1px solid #ddd;
+    }
+
+
+    .filter-card,
+    .header-action,
+    .table-actions,
+    .pagination-section {
+
+        display: none !important;
+    }
+
+
+    .section-card {
+
+        box-shadow: none;
+
+        margin: 10px 0;
+
+        border: 1px solid #ddd;
+    }
+
+
+    .contractor-page {
+
+        background: white;
+    }
+
+
+    .table-container {
+
+        overflow: visible;
+    }
+
+
+    #contractorTable {
+
+        min-width: 100%;
+
+        font-size: 8px;
+    }
+}

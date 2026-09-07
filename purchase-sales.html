@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Purchase & Sales Tracking</title>
+
+    <script src="auth-guard.js"></script>
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Page CSS -->
+    <link rel="stylesheet" href="purchase-sales.css">
+</head>
+
+<body>
+
+<div class="page-container">
+
+    <!-- =========================================
+         PAGE HEADER
+    ========================================== -->
+    <div class="page-header">
+
+        <div>
+            <h1>
+                <i class="fa-solid fa-cart-shopping"></i>
+                Purchase & Sales Tracking
+            </h1>
+
+            <p>
+                Manage purchases, sales and inventory movements
+            </p>
+        </div>
+
+        <div class="header-actions">
+            <button class="btn btn-secondary">
+                <i class="fa-solid fa-file-excel"></i>
+                Export Excel
+            </button>
+
+            <button class="btn btn-primary" id="newPurchaseBtn">
+                <i class="fa-solid fa-plus"></i>
+                New Purchase
+            </button>
+
+            <button class="btn btn-success" id="newSaleBtn">
+                <i class="fa-solid fa-plus"></i>
+                New Sale
+            </button>
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         SUMMARY CARDS
+    ========================================== -->
+    <div class="summary-grid">
+
+        <div class="summary-card purchase-card">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-cart-arrow-down"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Total Purchases</span>
+                <h2 id="totalPurchases">₹0</h2>
+                <small>
+                    <i class="fa-solid fa-arrow-up"></i>
+                    8.4% this month
+                </small>
+            </div>
+
+        </div>
+
+
+        <div class="summary-card sales-card">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-cart-arrow-up"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Total Sales</span>
+                <h2 id="totalSales">₹0</h2>
+                <small>
+                    <i class="fa-solid fa-arrow-up"></i>
+                    12.6% this month
+                </small>
+            </div>
+
+        </div>
+
+
+        <div class="summary-card stock-card">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-boxes-stacked"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Total GST</span>
+                <h2 id="totalTax">₹0</h2>
+                <small>
+                    Calculated from saved invoices
+                </small>
+            </div>
+
+        </div>
+
+
+        <div class="summary-card profit-card">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-chart-line"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Grand Total</span>
+                <h2 id="totalAmount">₹0</h2>
+                <small>
+                    Purchase and sale invoice amounts
+                </small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         CHARTS
+    ========================================== -->
+    <div class="dashboard-grid">
+
+        <!-- Purchase Sales Chart -->
+        <div class="dashboard-card chart-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h3>Purchase vs Sales</h3>
+                    <p>Monthly transaction overview</p>
+                </div>
+
+                <select class="period-select">
+                    <option>Last 6 Months</option>
+                    <option>Last 12 Months</option>
+                    <option>This Year</option>
+                </select>
+
+            </div>
+
+            <div class="bar-chart">
+
+                <div class="chart-y-axis">
+                    <span>₹60K</span>
+                    <span>₹45K</span>
+                    <span>₹30K</span>
+                    <span>₹15K</span>
+                    <span>₹0</span>
+                </div>
+
+                <div class="chart-area">
+
+                    <div class="grid-line line-1"></div>
+                    <div class="grid-line line-2"></div>
+                    <div class="grid-line line-3"></div>
+                    <div class="grid-line line-4"></div>
+                    <div class="grid-line line-5"></div>
+
+                    <div class="bars">
+
+                        <div class="month">
+                            <div class="bar purchase" style="height:55%"></div>
+                            <div class="bar sale" style="height:70%"></div>
+                            <span>Apr</span>
+                        </div>
+
+                        <div class="month">
+                            <div class="bar purchase" style="height:65%"></div>
+                            <div class="bar sale" style="height:60%"></div>
+                            <span>May</span>
+                        </div>
+
+                        <div class="month">
+                            <div class="bar purchase" style="height:48%"></div>
+                            <div class="bar sale" style="height:75%"></div>
+                            <span>Jun</span>
+                        </div>
+
+                        <div class="month">
+                            <div class="bar purchase" style="height:70%"></div>
+                            <div class="bar sale" style="height:82%"></div>
+                            <span>Jul</span>
+                        </div>
+
+                        <div class="month">
+                            <div class="bar purchase" style="height:60%"></div>
+                            <div class="bar sale" style="height:72%"></div>
+                            <span>Aug</span>
+                        </div>
+
+                        <div class="month">
+                            <div class="bar purchase" style="height:75%"></div>
+                            <div class="bar sale" style="height:88%"></div>
+                            <span>Sep</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="chart-legend">
+
+                <span>
+                    <i class="legend-dot purchase-dot"></i>
+                    Purchases
+                </span>
+
+                <span>
+                    <i class="legend-dot sale-dot"></i>
+                    Sales
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- Top Products -->
+        <div class="dashboard-card">
+
+            <div class="card-header">
+
+                <div>
+                    <h3>Top Selling Products</h3>
+                    <p>Based on quantity sold</p>
+                </div>
+
+                <button class="icon-button">
+                    <i class="fa-solid fa-ellipsis"></i>
+                </button>
+
+            </div>
+
+
+            <div class="product-list">
+
+                <div class="product-row">
+
+                    <div class="product-icon">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+
+                    <div class="product-info">
+                        <strong>Cement</strong>
+                        <span>320 units sold</span>
+                    </div>
+
+                    <div class="product-progress">
+                        <div style="width:90%"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="product-row">
+
+                    <div class="product-icon">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+
+                    <div class="product-info">
+                        <strong>Steel</strong>
+                        <span>245 units sold</span>
+                    </div>
+
+                    <div class="product-progress">
+                        <div style="width:75%"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="product-row">
+
+                    <div class="product-icon">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+
+                    <div class="product-info">
+                        <strong>Bricks</strong>
+                        <span>210 units sold</span>
+                    </div>
+
+                    <div class="product-progress">
+                        <div style="width:65%"></div>
+                    </div>
+
+                </div>
+
+
+                <div class="product-row">
+
+                    <div class="product-icon">
+                        <i class="fa-solid fa-cube"></i>
+                    </div>
+
+                    <div class="product-info">
+                        <strong>Sand</strong>
+                        <span>185 units sold</span>
+                    </div>
+
+                    <div class="product-progress">
+                        <div style="width:55%"></div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         FILTER SECTION
+    ========================================== -->
+    <div class="filter-card">
+
+        <div class="filter-header">
+            <div>
+                <h3>Transaction Records</h3>
+                <p>View and manage all purchase and sales transactions</p>
+            </div>
+
+            <button class="filter-toggle">
+                <i class="fa-solid fa-filter"></i>
+                Filters
+            </button>
+        </div>
+
+
+        <div class="filters">
+
+            <div class="form-group">
+
+                <label>From Date</label>
+
+                <input id="fromDate" type="date">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>To Date</label>
+
+                <input id="toDate" type="date">
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Transaction Type</label>
+
+                <select id="transactionTypeFilter">
+                    <option>All Transactions</option>
+                    <option>Purchase</option>
+                    <option>Sale</option>
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Product</label>
+
+                <select id="productFilter">
+                    <option>All Products</option>
+                    <option>Cement</option>
+                    <option>Steel</option>
+                    <option>Bricks</option>
+                    <option>Sand</option>
+                </select>
+
+            </div>
+
+
+            <div class="form-group search-group">
+
+                <label>Search</label>
+
+                <div class="search-box">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                    <input id="transactionSearch"
+                        type="text"
+                        placeholder="Invoice, supplier or customer..."
+                    >
+
+                </div>
+
+            </div>
+
+
+            <button class="btn btn-primary apply-btn" id="applyFiltersBtn">
+                Apply
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         TRANSACTION TABLE
+    ========================================== -->
+    <div class="table-card">
+
+        <div class="table-header">
+
+            <div>
+                <h3>Recent Transactions</h3>
+                <span id="recordCount">Showing 0 transactions</span>
+            </div>
+
+            <button class="btn btn-outline">
+                <i class="fa-solid fa-print"></i>
+                Print
+            </button>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+                        <th>Type</th>
+                        <th>Invoice Date</th>
+                        <th>Invoice Number</th>
+                        <th>Bill To</th>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>HSN Code</th>
+                        <th>Rate</th>
+                        <th>Value</th>
+                        <th>CGST</th>
+                        <th>SGST</th>
+                        <th>IGST</th>
+                        <th>Amount</th>
+                        <th>Delivery</th>
+                        <th>DC Number</th>
+                        <th>E-Way Bill</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="transactionRows">
+
+                    <tr>
+
+                        <td>03 Sep 2026</td>
+
+                        <td>
+                            <strong>PUR-1001</strong>
+                        </td>
+
+                        <td>
+                            <div class="product-cell">
+                                <div class="small-product-icon">
+                                    <i class="fa-solid fa-cube"></i>
+                                </div>
+                                Cement
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="type-badge purchase">
+                                Purchase
+                            </span>
+                        </td>
+
+                        <td>ABC Suppliers</td>
+
+                        <td>50</td>
+
+                        <td>₹400</td>
+
+                        <td>
+                            <strong>₹20,000</strong>
+                        </td>
+
+                        <td>
+                            <span class="payment-badge paid">
+                                Paid
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="status-badge completed">
+                                Completed
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button title="View">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button title="Edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>03 Sep 2026</td>
+
+                        <td>
+                            <strong>SAL-2001</strong>
+                        </td>
+
+                        <td>
+                            <div class="product-cell">
+                                <div class="small-product-icon">
+                                    <i class="fa-solid fa-cube"></i>
+                                </div>
+                                Cement
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="type-badge sale">
+                                Sale
+                            </span>
+                        </td>
+
+                        <td>XYZ Customer</td>
+
+                        <td>20</td>
+
+                        <td>₹550</td>
+
+                        <td>
+                            <strong>₹11,000</strong>
+                        </td>
+
+                        <td>
+                            <span class="payment-badge pending">
+                                Pending
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="status-badge completed">
+                                Completed
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button title="View">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button title="Edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>02 Sep 2026</td>
+
+                        <td>
+                            <strong>PUR-1002</strong>
+                        </td>
+
+                        <td>
+                            <div class="product-cell">
+                                <div class="small-product-icon">
+                                    <i class="fa-solid fa-cube"></i>
+                                </div>
+                                Steel
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="type-badge purchase">
+                                Purchase
+                            </span>
+                        </td>
+
+                        <td>Steel Traders</td>
+
+                        <td>25</td>
+
+                        <td>₹2,500</td>
+
+                        <td>
+                            <strong>₹62,500</strong>
+                        </td>
+
+                        <td>
+                            <span class="payment-badge paid">
+                                Paid
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="status-badge completed">
+                                Completed
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button title="View">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button title="Edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>02 Sep 2026</td>
+
+                        <td>
+                            <strong>SAL-2002</strong>
+                        </td>
+
+                        <td>
+                            <div class="product-cell">
+                                <div class="small-product-icon">
+                                    <i class="fa-solid fa-cube"></i>
+                                </div>
+                                Steel
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="type-badge sale">
+                                Sale
+                            </span>
+                        </td>
+
+                        <td>Build Corp.</td>
+
+                        <td>10</td>
+
+                        <td>₹2,900</td>
+
+                        <td>
+                            <strong>₹29,000</strong>
+                        </td>
+
+                        <td>
+                            <span class="payment-badge paid">
+                                Paid
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="status-badge completed">
+                                Completed
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button title="View">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button title="Edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+
+                    <tr>
+
+                        <td>01 Sep 2026</td>
+
+                        <td>
+                            <strong>PUR-1003</strong>
+                        </td>
+
+                        <td>
+                            <div class="product-cell">
+                                <div class="small-product-icon">
+                                    <i class="fa-solid fa-cube"></i>
+                                </div>
+                                Bricks
+                            </div>
+                        </td>
+
+                        <td>
+                            <span class="type-badge purchase">
+                                Purchase
+                            </span>
+                        </td>
+
+                        <td>XYZ Traders</td>
+
+                        <td>500</td>
+
+                        <td>₹8</td>
+
+                        <td>
+                            <strong>₹4,000</strong>
+                        </td>
+
+                        <td>
+                            <span class="payment-badge paid">
+                                Paid
+                            </span>
+                        </td>
+
+                        <td>
+                            <span class="status-badge completed">
+                                Completed
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="action-buttons">
+                                <button title="View">
+                                    <i class="fa-solid fa-eye"></i>
+                                </button>
+
+                                <button title="Edit">
+                                    <i class="fa-solid fa-pen"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+        <!-- Pagination -->
+
+        <div class="pagination">
+
+            <span>
+                Showing 1–5 of 25 records
+            </span>
+
+            <div class="page-buttons">
+
+                <button disabled>
+                    <i class="fa-solid fa-chevron-left"></i>
+                </button>
+
+                <button class="active">1</button>
+
+                <button>2</button>
+
+                <button>3</button>
+
+                <button>4</button>
+
+                <button>5</button>
+
+                <button>
+                    <i class="fa-solid fa-chevron-right"></i>
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     PURCHASE MODAL
+========================================== -->
+
+<div class="modal-overlay" id="purchaseModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>New Purchase</h2>
+                <p>Add a new purchase transaction</p>
+            </div>
+
+            <button class="close-modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Purchase Date</label>
+                    <input type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Invoice Number</label>
+                    <input type="text" placeholder="PUR-1004">
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Supplier</label>
+                    <select>
+                        <option>Select Supplier</option>
+                        <option>ABC Suppliers</option>
+                        <option>Steel Traders</option>
+                        <option>XYZ Traders</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Product</label>
+                    <select>
+                        <option>Select Product</option>
+                        <option>Cement</option>
+                        <option>Steel</option>
+                        <option>Bricks</option>
+                        <option>Sand</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" placeholder="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Purchase Rate</label>
+                    <input type="number" placeholder="₹0">
+                </div>
+
+                <div class="form-group">
+                    <label>Payment Status</label>
+                    <select>
+                        <option>Paid</option>
+                        <option>Pending</option>
+                        <option>Partial</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Payment Mode</label>
+                    <select>
+                        <option>Cash</option>
+                        <option>UPI</option>
+                        <option>Bank Transfer</option>
+                        <option>Credit</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea placeholder="Additional notes"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button class="btn btn-secondary close-modal">
+                Cancel
+            </button>
+
+            <button class="btn btn-primary">
+                <i class="fa-solid fa-check"></i>
+                Save Purchase
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================
+     SALES MODAL
+========================================== -->
+
+<div class="modal-overlay" id="saleModal">
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div>
+                <h2>New Sale</h2>
+                <p>Add a new sales transaction</p>
+            </div>
+
+            <button class="close-modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Sale Date</label>
+                    <input type="date">
+                </div>
+
+                <div class="form-group">
+                    <label>Invoice Number</label>
+                    <input type="text" placeholder="SAL-2003">
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Customer</label>
+                    <select>
+                        <option>Select Customer</option>
+                        <option>XYZ Customer</option>
+                        <option>Build Corp.</option>
+                        <option>ABC Construction</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Product</label>
+                    <select>
+                        <option>Select Product</option>
+                        <option>Cement</option>
+                        <option>Steel</option>
+                        <option>Bricks</option>
+                        <option>Sand</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Available Stock</label>
+                    <input type="number" value="150" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" placeholder="0">
+                </div>
+
+                <div class="form-group">
+                    <label>Selling Rate</label>
+                    <input type="number" placeholder="₹0">
+                </div>
+
+                <div class="form-group">
+                    <label>Payment Status</label>
+                    <select>
+                        <option>Paid</option>
+                        <option>Pending</option>
+                        <option>Partial</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Payment Mode</label>
+                    <select>
+                        <option>Cash</option>
+                        <option>UPI</option>
+                        <option>Bank Transfer</option>
+                        <option>Credit</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Notes</label>
+                    <textarea placeholder="Additional notes"></textarea>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button class="btn btn-secondary close-modal">
+                Cancel
+            </button>
+
+            <button class="btn btn-success">
+                <i class="fa-solid fa-check"></i>
+                Save Sale
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="purchase-sales.js"></script>
+
+</body>
+</html>

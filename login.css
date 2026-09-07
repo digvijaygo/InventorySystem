@@ -1,0 +1,271 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    background: #e4efff;
+    color: #0f172a;
+}
+
+.login-shell {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.login-container {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.10), 0 8px 10px -6px rgba(0, 0, 0, 0.10);
+    display: flex;
+    width: 100%;
+    max-width: 900px;
+    min-height: 550px;
+    overflow: hidden;
+}
+
+.brand-side {
+    width: 50%;
+    background: #1a73e8;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 1.25rem;
+    letter-spacing: 0.4px;
+    z-index: 5;
+}
+
+.slides-window {
+    position: relative;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.slide {
+    position: absolute;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    pointer-events: none;
+}
+
+.slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+    position: relative;
+}
+
+.vector-circle {
+    background: rgba(255, 255, 255, 0.10);
+    padding: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.brand-footer h2 {
+    font-size: 1.85rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.brand-footer p {
+    color: #d2e3fc;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    max-width: 320px;
+    margin: 0 auto;
+}
+
+.dots-indicator {
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+    margin-top: 10px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background: #ffffff;
+}
+
+.form-side {
+    width: 50%;
+    padding: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: #ffffff;
+}
+
+.form-wrapper {
+    width: 100%;
+    max-width: 360px;
+    margin: 0 auto;
+}
+
+.system-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.system-subtitle {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-top: 4px;
+    margin-bottom: 32px;
+}
+
+.sign-in-heading {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 16px;
+}
+
+.form-block {
+    display: grid;
+    gap: 10px;
+}
+
+.form-block + .form-block {
+    margin-top: 10px;
+}
+
+.form-block label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: #334155;
+    margin-bottom: 4px;
+}
+
+.form-block input {
+    width: 100%;
+    height: 44px;
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.form-block input::placeholder {
+    color: #94a3b8;
+}
+
+.form-block input:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 3px rgba(26, 115, 232, 0.15);
+}
+
+.submit-btn,
+.secondary-btn {
+    height: 44px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.submit-btn {
+    background: #1a73e8;
+    color: #ffffff;
+}
+
+.submit-btn:hover {
+    background: #1557b0;
+}
+
+.form-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.secondary-btn {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+.secondary-btn:hover {
+    background: #cbd5e1;
+}
+
+.hidden {
+    display: none;
+}
+
+.hint {
+    margin: 0;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.status-text {
+    min-height: 22px;
+    margin-top: 14px;
+    font-size: 0.85rem;
+    color: #1d4ed8;
+}
+
+.status-text.error {
+    color: #b91c1c;
+}
+
+@media (max-width: 768px) {
+    .brand-side {
+        display: none;
+    }
+
+    .form-side {
+        width: 100%;
+        padding: 32px;
+    }
+
+    .login-container {
+        min-height: 480px;
+    }
+}

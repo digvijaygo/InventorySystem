@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <script src="auth-guard.js"></script>
+    <link rel="stylesheet" href="users.css">
+</head>
+<body>
+    <div class="page">
+        <div class="page-header">
+            <h1>User Management</h1>
+            <button id="addUserBtn" type="button">Add New User</button>
+        </div>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Mobile Number</th>
+                        <th>Role</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody"></tbody>
+            </table>
+        </div>
+
+        <p id="statusText" class="status-text" aria-live="polite"></p>
+    </div>
+
+    <div id="userModal" class="modal-overlay" style="display:none;">
+        <div class="payment-modal">
+            <div class="modal-header">
+                <div>
+                    <h2 id="modalTitle">Add New User</h2>
+                    <p id="modalSubtitle">Create a user account with role and status</p>
+                </div>
+
+                <button type="button" class="modal-close" id="closeUserModal">×</button>
+            </div>
+
+            <form id="userForm">
+                <input type="hidden" id="userId">
+
+                <div class="form-grid">
+                    <div class="form-group full-width">
+                        <label for="fullName">Full Name</label>
+                        <input id="fullName" type="text" placeholder="Enter full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mobileNumber">Mobile Number</label>
+                        <input id="mobileNumber" type="tel" maxlength="10" placeholder="Enter 10-digit mobile" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="role">Role</label>
+                        <select id="role" required>
+                            <option value="Admin">Admin</option>
+                            <option value="Employee">Employee</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label for="isActive">Status</label>
+                        <select id="isActive" required>
+                            <option value="1">Active</option>
+                            <option value="0">Inactive</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" id="cancelBtn" class="modal-cancel">Cancel</button>
+                    <button type="submit" id="saveUserBtn" class="modal-save">Save User</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="users.js"></script>
+</body>
+</html>

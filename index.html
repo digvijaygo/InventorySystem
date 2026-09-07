@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Home</title>
+    <script src="auth-guard.js"></script>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            <button id="sidebarToggle" class="sidebar-minimize" type="button" aria-label="Minimize menu" aria-expanded="true"><</button>
+
+            <div class="brand">
+                <h1>Inventory</h1>
+                <p>Product Dashboard</p>
+            </div>
+
+          <nav class="menu">
+    <a href="#" id="homeLink" class="menu-link active" title="Home">
+        <span class="menu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v11a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9"/></svg>
+        </span>
+        <span class="menu-label">Home</span>
+    </a>
+
+    <a href="dashboard.html" class="menu-link view-link" data-title="Dashboard" target="productFrame" title="Dashboard">
+        <span class="menu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        </span>
+        <span class="menu-label">Dashboard</span>
+    </a>
+
+    <button id="inventoryToggle" class="menu-dropdown-btn" type="button" aria-expanded="false" title="Dispatch">
+        <span class="menu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 3h13v13H1z"/><path d="M14 8h4l4 4v4h-8z"/><circle cx="6" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></svg>
+        </span>
+        <span class="menu-label">Dispatch</span>
+        <span class="caret" aria-hidden="true">v</span>
+    </button>
+
+    <div id="inventoryDropdown" class="submenu">
+        <a href="product1.html" class="submenu-link view-link" data-title="Prefabricated Sanitary Facilities – Boys & Girls" target="productFrame" title="Prefabricated Sanitary Facilities – Boys & Girls">
+            <span class="menu-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="1"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+            </span>
+            <span class="menu-label">Prefabricated Sanitary Facilities – Boys & Girls</span>
+        </a>
+        <a href="#" class="submenu-link disabled" aria-disabled="true" title="Product 2 (Coming Soon)">
+            <span class="menu-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="1"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+            </span>
+            <span class="menu-label">Product 2 (Coming Soon)</span>
+        </a>
+        <a href="#" class="submenu-link disabled" aria-disabled="true" title="Product 3 (Coming Soon)">
+            <span class="menu-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="1"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
+            </span>
+            <span class="menu-label">Product 3 (Coming Soon)</span>
+        </a>
+    </div>
+
+    <a href="dailystocks.html" class="menu-link view-link" data-title="Daily Stocks" target="productFrame" title="Daily Stocks">
+        <span class="menu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8 12 3 3 8l9 5 9-5Z"/><path d="M3 8v9l9 5 9-5V8"/><path d="M12 13v9"/></svg>
+        </span>
+        <span class="menu-label">Daily Stocks</span>
+    </a>
+    <a href="contractorpayment.html" class="menu-link view-link" data-title="Contractor Payment" target="productFrame" title="Contractor Payment">
+        <span class="menu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 8h6M9 12h6M9 16h4"/></svg>
+        </span>
+        <span class="menu-label">Contractor Payment</span>
+    </a>
+    <a href="purchase-sales.html" class="menu-link view-link" data-title="Purchase and Sales" target="productFrame" title="Purchase and Sales">
+        <span class="menu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h12l2 3h4v7H3z"/><path d="M7 7V4h7v3"/><path d="M7 14h10"/><circle cx="7" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg>
+        </span>
+        <span class="menu-label">Purchase and Sales</span>
+    </a>
+    <a href="attendance-payment.html" class="menu-link view-link" data-title="Attendance and Payment" target="productFrame" title="Attendance and Payment">
+        <span class="menu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 3v3M16 3v3M4 9h16"/><path d="m8 14 2 2 5-5"/></svg>
+        </span>
+        <span class="menu-label">Attendance and Payment</span>
+    </a>
+    <a href="users.html" id="usersLink" class="menu-link view-link" data-title="User Management" target="productFrame" title="User Management">
+        <span class="menu-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 2.9-6.3 6.5-6.3s6.5 2.7 6.5 6.3"/><circle cx="17.5" cy="8.5" r="2.4"/><path d="M16 13.8c2.6.4 4.5 2.6 4.5 5.3"/></svg>
+        </span>
+        <span class="menu-label">User Management</span>
+    </a>
+</nav>
+        </aside>
+
+        <main class="main-content">
+            <section class="viewer-shell">
+                <div class="viewer-header">
+                    <div>
+                        <h2 id="viewerTitle">Welcome</h2>
+                        <p id="viewerSubtitle">Use the left Inventory menu to switch products in this same window.</p>
+                    </div>
+                    <div class="session-topbar">
+                        <div class="session-user">
+                            <strong id="currentUserName">Logged User</strong>
+                            <span id="currentUserRole">Role</span>
+                        </div>
+                        <button id="logoutBtn" class="logout-btn" type="button">Logout</button>
+                    </div>
+                </div>
+
+                <div id="welcomePanel" class="welcome-panel">
+                    <div class="welcome-banner" id="welcomeBanner">
+                        <img id="bannerImage" class="banner-image" src="" alt="Manufacturing banner">
+                        <div class="banner-overlay">
+                            <h4 id="bannerTitle"></h4>
+                            <p id="bannerText"></p>
+                        </div>
+                        <div class="banner-dots" id="bannerDots"></div>
+                    </div>
+
+                    <h3>Manufacturing Control Center</h3>
+                    <p>Track material readiness, daily consumption, and stock movement from one place. Use Inventory and Daily Stocks to monitor production continuity.</p>
+
+                    <div class="welcome-highlights">
+                        <article class="highlight-card">
+                            <h4>Production Visibility</h4>
+                            <p>Follow item flow from dispatch to floor usage with real-time stock checks.</p>
+                        </article>
+                        <article class="highlight-card">
+                            <h4>Daily Material Planning</h4>
+                            <p>Calculate required quantities by cabin count and identify shortages early.</p>
+                        </article>
+                        <article class="highlight-card">
+                            <h4>Fast Operations</h4>
+                            <p>Use row-wise edit, delete, print, and export options for operational speed.</p>
+                        </article>
+                    </div>
+
+                    <div class="welcome-gallery">
+                        <figure class="gallery-card">
+                            <img src="assets/home/gallery-production-line.jpg" alt="Factory production line">
+                            <figcaption>Assembly line monitoring and production throughput.</figcaption>
+                        </figure>
+                        <figure class="gallery-card">
+                            <img id="warehouseImage" src="assets/home/gallery-warehouse.jpg" alt="Industrial warehouse stock racks">
+                            <figcaption>Warehouse stock management and material organization.</figcaption>
+                        </figure>
+                        <figure class="gallery-card">
+                            <img id="qualityImage" src="assets/home/gallery-quality.jpg" alt="Industrial quality inspection">
+                            <figcaption>Quality inspection and process reliability across operations.</figcaption>
+                        </figure>
+                    </div>
+                </div>
+
+                <iframe
+                    id="productFrame"
+                    name="productFrame"
+                    class="viewer-frame"
+                    src="about:blank"
+                    title="Product Viewer"
+                    style="display: none;"
+                ></iframe>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const homeLink = document.getElementById('homeLink');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const inventoryToggle = document.getElementById('inventoryToggle');
+        const inventoryDropdown = document.getElementById('inventoryDropdown');
+        const viewLinks = document.querySelectorAll('.view-link');
+        const layout = document.querySelector('.layout');
+        const viewerTitle = document.getElementById('viewerTitle');
+        const viewerSubtitle = document.getElementById('viewerSubtitle');
+        const welcomePanel = document.getElementById('welcomePanel');
+        const productFrame = document.getElementById('productFrame');
+        const bannerImage = document.getElementById('bannerImage');
+        const bannerTitle = document.getElementById('bannerTitle');
+        const bannerText = document.getElementById('bannerText');
+        const bannerDots = document.getElementById('bannerDots');
+        const warehouseImage = document.getElementById('warehouseImage');
+        const qualityImage = document.getElementById('qualityImage');
+        const currentUserName = document.getElementById('currentUserName');
+        const currentUserRole = document.getElementById('currentUserRole');
+        const usersLink = document.getElementById('usersLink');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        const bannerSlides = [
+            {
+                image: 'assets/home/banner-material-flow.jpg',
+                fallbackImage: 'assets/home/fallback-banner-material-flow.jpg',
+                title: 'Material Flow Planning',
+                text: 'Keep line-side availability stable with better stock staging and allocation.'
+            },
+            {
+                image: 'assets/home/banner-throughput.jpg',
+                fallbackImage: 'assets/home/fallback-banner-throughput.jpg',
+                title: 'Manufacturing Throughput',
+                text: 'Monitor daily output signals and align dispatch priorities quickly.'
+            },
+            {
+                image: 'assets/home/banner-quality.jpg',
+                fallbackImage: 'assets/home/fallback-banner-quality.jpg',
+                title: 'Quality and Reliability',
+                text: 'Combine stock status and process checks to reduce production delays.'
+            }
+        ];
+        const contentImageFallback = 'assets/home/gallery-production-line.jpg';
+        const warehouseFallbackImage = 'assets/home/fallback-warehouse.jpg';
+        const qualityFallbackImage = 'assets/home/fallback-quality.jpg';
+        let activeBannerIndex = 0;
+        let bannerTimer = null;
+
+        bannerImage.addEventListener('error', () => {
+            const activeSlide = bannerSlides[activeBannerIndex];
+            const fallback = activeSlide && activeSlide.fallbackImage ? activeSlide.fallbackImage : '';
+            if (fallback && bannerImage.src !== fallback) {
+                bannerImage.src = fallback;
+            }
+        });
+
+        if (warehouseImage) {
+            warehouseImage.addEventListener('error', () => {
+                if (warehouseImage.src !== warehouseFallbackImage) {
+                    warehouseImage.src = warehouseFallbackImage;
+                }
+            });
+        }
+
+        if (qualityImage) {
+            qualityImage.addEventListener('error', () => {
+                if (qualityImage.src !== qualityFallbackImage) {
+                    qualityImage.src = qualityFallbackImage;
+                }
+            });
+        }
+
+        document.querySelectorAll('.welcome-gallery img:not(#warehouseImage):not(#qualityImage)').forEach((img) => {
+            img.addEventListener('error', () => {
+                if (img.src !== contentImageFallback) {
+                    img.src = contentImageFallback;
+                }
+            });
+        });
+
+        function renderBanner(index) {
+            const slide = bannerSlides[index];
+            if (!slide) {
+                return;
+            }
+
+            bannerImage.src = slide.image;
+            bannerImage.alt = slide.title;
+            bannerTitle.textContent = slide.title;
+            bannerText.textContent = slide.text;
+
+            Array.from(bannerDots.children).forEach((dot, dotIndex) => {
+                dot.classList.toggle('active', dotIndex === index);
+            });
+        }
+
+        function startBannerAutoRotate() {
+            if (bannerTimer) {
+                clearInterval(bannerTimer);
+            }
+
+            bannerTimer = setInterval(() => {
+                activeBannerIndex = (activeBannerIndex + 1) % bannerSlides.length;
+                renderBanner(activeBannerIndex);
+            }, 4000);
+        }
+
+        function initializeBanner() {
+            bannerDots.innerHTML = '';
+
+            bannerSlides.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'banner-dot';
+                dot.setAttribute('aria-label', `Go to banner slide ${index + 1}`);
+                dot.addEventListener('click', () => {
+                    activeBannerIndex = index;
+                    renderBanner(activeBannerIndex);
+                    startBannerAutoRotate();
+                });
+                bannerDots.appendChild(dot);
+            });
+
+            renderBanner(activeBannerIndex);
+            startBannerAutoRotate();
+        }
+
+        function showWelcomeScreen() {
+            viewerTitle.textContent = 'Welcome';
+            if (viewerSubtitle) {
+                viewerSubtitle.textContent = 'Use the left Inventory menu to switch products in this same window.';
+            }
+            welcomePanel.style.display = 'block';
+            productFrame.style.display = 'none';
+            productFrame.src = 'about:blank';
+
+            homeLink.classList.add('active');
+            viewLinks.forEach((link) => link.classList.remove('active'));
+        }
+
+        function showProduct(link) {
+            const targetTitle = link.dataset.title || 'Product';
+            const targetHref = link.getAttribute('href');
+
+            viewerTitle.textContent = targetTitle;
+            if (viewerSubtitle) {
+                viewerSubtitle.textContent = 'Product page loaded on the right panel.';
+            }
+            welcomePanel.style.display = 'none';
+            productFrame.style.display = 'block';
+
+            if (targetHref) {
+                productFrame.src = targetHref;
+            }
+
+            homeLink.classList.remove('active');
+            viewLinks.forEach((entry) => entry.classList.remove('active'));
+            link.classList.add('active');
+        }
+
+        inventoryToggle.addEventListener('click', () => {
+            const isOpen = inventoryDropdown.classList.toggle('open');
+            inventoryToggle.setAttribute('aria-expanded', String(isOpen));
+        });
+
+        homeLink.addEventListener('click', (event) => {
+            event.preventDefault();
+            showWelcomeScreen();
+        });
+
+        viewLinks.forEach((link) => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                showProduct(link);
+            });
+        });
+
+        sidebarToggle.addEventListener('click', () => {
+            const collapsed = layout.classList.toggle('sidebar-collapsed');
+            sidebarToggle.textContent = collapsed ? '>' : '<';
+            sidebarToggle.setAttribute('aria-expanded', String(!collapsed));
+            sidebarToggle.setAttribute('aria-label', collapsed ? 'Expand menu' : 'Minimize menu');
+        });
+
+        async function loadSessionUser() {
+            try {
+                const response = await fetch('./api/auth/session', {
+                    credentials: 'include'
+                });
+
+                if (!response.ok) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+
+                const payload = await response.json();
+                const user = payload.user || {};
+
+                currentUserName.textContent = user.full_name || 'User';
+                currentUserRole.textContent = user.role || 'Employee';
+
+                if ((user.role || '') !== 'Admin') {
+                    usersLink.style.display = 'none';
+                }
+            } catch (error) {
+                window.location.href = 'login.html';
+            }
+        }
+
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await fetch('./api/auth/logout', {
+                    method: 'POST',
+                    credentials: 'include'
+                });
+            } catch (error) {
+                console.error('Logout failed:', error);
+            }
+
+            window.location.href = 'Home.html';
+        });
+
+        initializeBanner();
+        loadSessionUser();
+        showWelcomeScreen();
+    </script>
+</body>
+</html>
