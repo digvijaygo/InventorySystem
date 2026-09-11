@@ -127,7 +127,7 @@ button {
 
 .summary-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(6, 1fr);
     gap: 18px;
     margin-bottom: 22px;
 }
@@ -166,6 +166,16 @@ button {
 .stock-card .summary-icon {
     background: #fff7ed;
     color: #ea580c;
+}
+
+.purchase-gst-card .summary-icon {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.sales-gst-card .summary-icon {
+    background: #eff6ff;
+    color: #2563eb;
 }
 
 .profit-card .summary-icon {
@@ -572,7 +582,9 @@ td {
     padding: 14px 16px;
     border-top: 1px solid #f0f2f5;
     font-size: 12px;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: break-word;
+    max-width: 150px;
     color: #4b5563;
 }
 

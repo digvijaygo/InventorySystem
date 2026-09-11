@@ -715,7 +715,9 @@ body {
 ========================================= */
 
 .rate-input,
-.hours-input {
+.hours-input,
+.in-time-input,
+.out-time-input {
     width: 90px;
 
     height: 34px;
@@ -732,11 +734,18 @@ body {
 }
 
 .rate-input:focus,
-.hours-input:focus {
+.hours-input:focus,
+.in-time-input:focus,
+.out-time-input:focus {
     border-color: #2563eb;
 
     box-shadow:
         0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.hours-input[readonly] {
+    background: #f9fafb;
+    color: #6b7280;
 }
 
 .daily-pay {
@@ -1290,7 +1299,9 @@ body {
 }
 
 .rate-input,
-.hours-input {
+.hours-input,
+.in-time-input,
+.out-time-input {
     height: 34px;
     border-radius: 5px;
     font-size: 12px;

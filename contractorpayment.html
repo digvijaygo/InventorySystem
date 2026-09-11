@@ -45,6 +45,11 @@
                 Export Excel
             </button>
 
+            <button class="header-action secondary-btn" id="rateCardBtn">
+                <span>📋</span>
+                Rate Card
+            </button>
+
             <button class="header-action secondary-btn" id="addContractorBtn">
                 <span>＋</span>
                 Add Contractor
@@ -71,81 +76,41 @@
     <section class="filter-card">
 
         <div class="filter-item">
-
             <label for="fromDate">From Date</label>
-
             <div class="input-wrapper">
-
-                <input
-                    type="date"
-                    id="fromDate"
-                    value="2026-08-01"
-                >
-
+                <input type="date" id="fromDate" value="2026-08-01">
             </div>
-
         </div>
-
 
         <div class="filter-item">
-
             <label for="toDate">To Date</label>
-
             <div class="input-wrapper">
-
-                <input
-                    type="date"
-                    id="toDate"
-                    value="2026-08-27"
-                >
-
+                <input type="date" id="toDate" value="2026-08-27">
             </div>
-
         </div>
-
 
         <div class="filter-item search-item">
-
             <label for="contractorSearch">Search Contractor</label>
-
             <div class="search-wrapper">
-
-                <input
-                    type="text"
-                    id="contractorSearch"
-                    placeholder="Search by contractor name..."
-                >
-
+                <input type="text" id="contractorSearch" placeholder="Search by contractor name...">
                 <span class="search-icon">⌕</span>
-
             </div>
-
         </div>
 
-
         <div class="filter-item">
-
             <label for="paymentStatus">Payment Status</label>
-
             <select id="paymentStatus">
-
                 <option value="ALL">All Status</option>
                 <option value="MATCH">Match</option>
                 <option value="PENDING">Pending</option>
                 <option value="MISMATCH">Mismatch</option>
                 <option value="OVERPAID">Overpaid</option>
-
             </select>
-
         </div>
 
-
         <div class="filter-item">
-
             <label for="workType">Work Type</label>
-
             <select id="workType">
-
                 <option value="ALL">All Work Types</option>
                 <option value="Fabrication">Fabrication</option>
                 <option value="Cement Sheet">Cement Sheet</option>
@@ -155,29 +120,17 @@
                 <option value="Door Fitting">Door Fitting</option>
                 <option value="Outer Colour">Outer Colour</option>
                 <option value="Inner Colour">Inner Colour</option>
-
             </select>
-
         </div>
 
-
         <div class="filter-actions">
-
-            <button
-                class="apply-filter-btn"
-                id="applyFilterBtn"
-            >
+            <button class="apply-filter-btn" id="applyFilterBtn">
                 <span>⚑</span>
                 Apply Filter
             </button>
-
-            <button
-                class="reset-btn"
-                id="resetFilterBtn"
-            >
+            <button class="reset-btn" id="resetFilterBtn">
                 ↻ Reset
             </button>
-
         </div>
 
     </section>
@@ -188,111 +141,40 @@
     ========================================================== -->
     <section class="kpi-grid">
 
-        <!-- Total Contractors -->
-
         <article class="kpi-card contractor-kpi">
-
-            <div class="kpi-icon blue-icon">
-                <span>♟</span>
-            </div>
-
+            <div class="kpi-icon blue-icon"><span>♟</span></div>
             <div class="kpi-content">
-
-                <span class="kpi-label">
-                    TOTAL CONTRACTORS
-                </span>
-
-                <strong id="totalContractors">
-                    19
-                </strong>
-
-                <small>
-                    Active Contractors
-                </small>
-
+                <span class="kpi-label">TOTAL CONTRACTORS</span>
+                <strong id="totalContractors">19</strong>
+                <small>Active Contractors</small>
             </div>
-
         </article>
-
-
-        <!-- Total Amount -->
 
         <article class="kpi-card amount-kpi">
-
-            <div class="kpi-icon green-icon">
-                <span>₹</span>
-            </div>
-
+            <div class="kpi-icon green-icon"><span>₹</span></div>
             <div class="kpi-content">
-
-                <span class="kpi-label">
-                    TOTAL AMOUNT
-                </span>
-
-                <strong id="totalAmount">
-                    ₹69,05,010
-                </strong>
-
-                <small>
-                    Total Contract Amount
-                </small>
-
+                <span class="kpi-label">TOTAL AMOUNT</span>
+                <strong id="totalAmount">₹69,05,010</strong>
+                <small>Total Contract Amount</small>
             </div>
-
         </article>
-
-
-        <!-- Total Payment -->
 
         <article class="kpi-card payment-kpi">
-
-            <div class="kpi-icon purple-icon">
-                <span>▣</span>
-            </div>
-
+            <div class="kpi-icon purple-icon"><span>▣</span></div>
             <div class="kpi-content">
-
-                <span class="kpi-label">
-                    TOTAL PAYMENT
-                </span>
-
-                <strong id="totalPayment">
-                    ₹60,36,960
-                </strong>
-
-                <small>
-                    Total Amount Paid
-                </small>
-
+                <span class="kpi-label">TOTAL PAYMENT</span>
+                <strong id="totalPayment">₹60,36,960</strong>
+                <small>Total Amount Paid</small>
             </div>
-
         </article>
 
-
-        <!-- Balance -->
-
         <article class="kpi-card balance-kpi">
-
-            <div class="kpi-icon orange-icon">
-                <span>◔</span>
-            </div>
-
+            <div class="kpi-icon orange-icon"><span>◔</span></div>
             <div class="kpi-content">
-
-                <span class="kpi-label">
-                    BALANCE PAYABLE
-                </span>
-
-                <strong id="totalBalance">
-                    ₹8,68,050
-                </strong>
-
-                <small>
-                    Total Outstanding
-                </small>
-
+                <span class="kpi-label">BALANCE PAYABLE</span>
+                <strong id="totalBalance">₹8,68,050</strong>
+                <small>Total Outstanding</small>
             </div>
-
         </article>
 
     </section>
@@ -304,280 +186,110 @@
     <section class="section-card work-summary-card">
 
         <div class="section-header">
-
             <div>
-
                 <h2>
                     WORK SUMMARY
-
-                    <span>
-                        (Total Quantity)
-                    </span>
+                    <span>(Total Quantity)</span>
                 </h2>
-
             </div>
-
             <div class="summary-total">
                 Total Quantity:
-                <strong id="totalQuantity">
-                    1,330.50
-                </strong>
+                <strong id="totalQuantity">1,330.50</strong>
             </div>
-
         </div>
-
 
         <div class="work-summary-grid">
 
-            <!-- LEFT COLUMN -->
-
             <div class="work-column">
-
                 <div class="work-row">
-
                     <div class="work-name">
-
-                        <span class="work-icon fabrication">
-                            ▥
-                        </span>
-
-                        <span>
-                            Fabrication
-                        </span>
-
+                        <span class="work-icon fabrication">▥</span>
+                        <span>Fabrication</span>
                     </div>
-
                     <div class="progress-container">
-
-                        <div
-                            class="progress-bar fabrication-bar"
-                            style="width:91%"
-                        ></div>
-
+                        <div class="progress-bar fabrication-bar" style="width:91%"></div>
                     </div>
-
-                    <strong class="work-value">
-                        252
-                    </strong>
-
+                    <strong class="work-value">252</strong>
                 </div>
 
-
                 <div class="work-row">
-
                     <div class="work-name">
-
-                        <span class="work-icon cement">
-                            ▣
-                        </span>
-
-                        <span>
-                            Cement Sheet
-                        </span>
-
+                        <span class="work-icon cement">▣</span>
+                        <span>Cement Sheet</span>
                     </div>
-
                     <div class="progress-container">
-
-                        <div
-                            class="progress-bar cement-bar"
-                            style="width:87%"
-                        ></div>
-
+                        <div class="progress-bar cement-bar" style="width:87%"></div>
                     </div>
-
-                    <strong class="work-value">
-                        240
-                    </strong>
-
+                    <strong class="work-value">240</strong>
                 </div>
 
-
                 <div class="work-row">
-
                     <div class="work-name">
-
-                        <span class="work-icon electrical">
-                            ⚡
-                        </span>
-
-                        <span>
-                            Electrical
-                        </span>
-
+                        <span class="work-icon electrical">⚡</span>
+                        <span>Electrical</span>
                     </div>
-
                     <div class="progress-container">
-
-                        <div
-                            class="progress-bar electrical-bar"
-                            style="width:100%"
-                        ></div>
-
+                        <div class="progress-bar electrical-bar" style="width:100%"></div>
                     </div>
-
-                    <strong class="work-value">
-                        276.5
-                    </strong>
-
+                    <strong class="work-value">276.5</strong>
                 </div>
 
-
                 <div class="work-row">
-
                     <div class="work-name">
-
-                        <span class="work-icon tiles">
-                            ◆
-                        </span>
-
-                        <span>
-                            Tiles
-                        </span>
-
+                        <span class="work-icon tiles">◆</span>
+                        <span>Tiles</span>
                     </div>
-
                     <div class="progress-container">
-
-                        <div
-                            class="progress-bar tiles-bar"
-                            style="width:17%"
-                        ></div>
-
+                        <div class="progress-bar tiles-bar" style="width:17%"></div>
                     </div>
-
-                    <strong class="work-value">
-                        48
-                    </strong>
-
+                    <strong class="work-value">48</strong>
                 </div>
-
             </div>
 
-
-            <!-- RIGHT COLUMN -->
-
             <div class="work-column">
-
                 <div class="work-row">
-
                     <div class="work-name">
-
-                        <span class="work-icon plumbing">
-                            ⚒
-                        </span>
-
-                        <span>
-                            Plumbing
-                        </span>
-
+                        <span class="work-icon plumbing">⚒</span>
+                        <span>Plumbing</span>
                     </div>
-
                     <div class="progress-container">
-
-                        <div
-                            class="progress-bar plumbing-bar"
-                            style="width:53%"
-                        ></div>
-
+                        <div class="progress-bar plumbing-bar" style="width:53%"></div>
                     </div>
-
-                    <strong class="work-value">
-                        147
-                    </strong>
-
+                    <strong class="work-value">147</strong>
                 </div>
 
-
                 <div class="work-row">
-
                     <div class="work-name">
-
-                        <span class="work-icon door">
-                            ▯
-                        </span>
-
-                        <span>
-                            Door Fitting
-                        </span>
-
+                        <span class="work-icon door">▯</span>
+                        <span>Door Fitting</span>
                     </div>
-
                     <div class="progress-container">
-
-                        <div
-                            class="progress-bar door-bar"
-                            style="width:11%"
-                        ></div>
-
+                        <div class="progress-bar door-bar" style="width:11%"></div>
                     </div>
-
-                    <strong class="work-value">
-                        29
-                    </strong>
-
+                    <strong class="work-value">29</strong>
                 </div>
 
-
                 <div class="work-row">
-
                     <div class="work-name">
-
-                        <span class="work-icon outer">
-                            ◆
-                        </span>
-
-                        <span>
-                            Outer Colour
-                        </span>
-
+                        <span class="work-icon outer">◆</span>
+                        <span>Outer Colour</span>
                     </div>
-
                     <div class="progress-container">
-
-                        <div
-                            class="progress-bar outer-bar"
-                            style="width:51%"
-                        ></div>
-
+                        <div class="progress-bar outer-bar" style="width:51%"></div>
                     </div>
-
-                    <strong class="work-value">
-                        140
-                    </strong>
-
+                    <strong class="work-value">140</strong>
                 </div>
 
-
                 <div class="work-row">
-
                     <div class="work-name">
-
-                        <span class="work-icon inner">
-                            ▰
-                        </span>
-
-                        <span>
-                            Inner Colour
-                        </span>
-
+                        <span class="work-icon inner">▰</span>
+                        <span>Inner Colour</span>
                     </div>
-
                     <div class="progress-container">
-
-                        <div
-                            class="progress-bar inner-bar"
-                            style="width:75%"
-                        ></div>
-
+                        <div class="progress-bar inner-bar" style="width:75%"></div>
                     </div>
-
-                    <strong class="work-value">
-                        208
-                    </strong>
-
+                    <strong class="work-value">208</strong>
                 </div>
-
             </div>
 
         </div>
@@ -591,151 +303,56 @@
     <section class="section-card contractor-table-card">
 
         <div class="table-header">
-
             <div>
-
-                <h2>
-                    CONTRACTOR PAYMENT DETAILS
-                </h2>
-
-                <p id="tableResultText">
-                    Showing 1 to 19 of 19 entries
-                </p>
-
+                <h2>CONTRACTOR PAYMENT DETAILS</h2>
+                <p id="tableResultText">Showing 1 to 19 of 19 entries</p>
             </div>
-
-
             <div class="table-actions">
-
-                <button
-                    class="table-icon-btn"
-                    title="Download"
-                    id="downloadTableBtn"
-                >
-                    ⇩
-                </button>
-
-                <button
-                    class="table-icon-btn active"
-                    title="Table View"
-                >
-                    ▦
-                </button>
-
-                <button
-                    class="table-icon-btn"
-                    title="Refresh"
-                    id="refreshTableBtn"
-                >
-                    ↻
-                </button>
-
+                <button class="table-icon-btn" title="Download" id="downloadTableBtn">⇩</button>
+                <button class="table-icon-btn active" title="Table View">▦</button>
+                <button class="table-icon-btn" title="Refresh" id="refreshTableBtn">↻</button>
             </div>
-
         </div>
-
-
-        <!-- TABLE SCROLL CONTAINER -->
 
         <div class="table-container">
-
             <table id="contractorTable">
-
                 <thead>
-
                     <tr>
-
                         <th>#</th>
-
-                        <th class="contractor-column">
-                            Contractor Name
-                        </th>
-
+                        <th class="contractor-column">Contractor Name</th>
                         <th>Fabrication</th>
-
                         <th>Cement Sheet</th>
-
                         <th>Electrical</th>
-
                         <th>Tiles</th>
-
                         <th>Plumbing</th>
-
                         <th>Door Fitting</th>
-
                         <th>Outer Colour</th>
-
                         <th>Inner Colour</th>
-
                         <th>Total Amount</th>
-
                         <th>Total Payment</th>
-
                         <th>Balance Payable</th>
-
                         <th>Payment Status</th>
-
                         <th>Remark</th>
-
                         <th>Action</th>
-
                     </tr>
-
                 </thead>
-
-                <tbody id="contractorTableBody">
-                </tbody>
-
+                <tbody id="contractorTableBody"></tbody>
             </table>
-
         </div>
 
-
-        <!-- PAGINATION -->
-
         <div class="pagination-section">
-
-            <div class="pagination-info" id="paginationInfo">
-                Showing 1 to 8 of 19 entries
-            </div>
-
+            <div class="pagination-info" id="paginationInfo">Showing 1 to 8 of 19 entries</div>
             <div class="pagination">
-
-                <button
-                    class="page-btn"
-                    id="firstPageBtn"
-                >
-                    «
-                </button>
-
-                <button
-                    class="page-btn"
-                    id="previousPageBtn"
-                >
-                    ‹
-                </button>
-
+                <button class="page-btn" id="firstPageBtn">«</button>
+                <button class="page-btn" id="previousPageBtn">‹</button>
                 <div id="pageNumbers"></div>
-
-                <button
-                    class="page-btn"
-                    id="nextPageBtn"
-                >
-                    ›
-                </button>
-
-                <button
-                    class="page-btn"
-                    id="lastPageBtn"
-                >
-                    »
-                </button>
-
+                <button class="page-btn" id="nextPageBtn">›</button>
+                <button class="page-btn" id="lastPageBtn">»</button>
             </div>
-
         </div>
 
     </section>
+
 
 
 </div>
@@ -744,264 +361,200 @@
 <!-- =============================================================
      PAYMENT MODAL
 ============================================================== -->
-
-<div
-    class="modal-overlay"
-    id="paymentModal"
-    style="display:none;"
->
-
+<div class="modal-overlay" id="paymentModal" style="display:none;">
     <div class="payment-modal">
-
         <div class="modal-header">
-
             <div>
-
-                <h2>
-                    Add Contractor Payment
-                </h2>
-
-                <p>
-                    Record a new contractor payment
-                </p>
-
+                <h2>Add Contractor Payment</h2>
+                <p>Record a new contractor payment</p>
             </div>
-
-            <button
-                class="modal-close"
-                id="closePaymentModal"
-            >
-                ×
-            </button>
-
+            <button class="modal-close" id="closePaymentModal">×</button>
         </div>
 
-
         <form id="paymentForm">
-
             <div class="form-grid">
-
                 <div class="form-group">
-
-                    <label>
-                        Contractor
-                    </label>
-
+                    <label>Contractor</label>
                     <select id="paymentContractor" required>
-
-                        <option value="">
-                            Select Contractor
-                        </option>
-
+                        <option value="">Select Contractor</option>
                     </select>
-
                 </div>
 
-
                 <div class="form-group">
-
-                    <label>
-                        Payment Date
-                    </label>
-
-                    <input
-                        type="date"
-                        id="paymentDate"
-                        required
-                    >
-
+                    <label>Payment Date</label>
+                    <input type="date" id="paymentDate" required>
                 </div>
 
-
                 <div class="form-group">
-
-                    <label>
-                        Payment Amount
-                    </label>
-
-                    <input
-                        type="number"
-                        id="paymentAmount"
-                        min="0"
-                        step="0.01"
-                        placeholder="Enter amount"
-                        required
-                    >
-
+                    <label>Payment Amount</label>
+                    <input type="number" id="paymentAmount" min="0" step="0.01" placeholder="Enter amount" required>
                 </div>
 
-
                 <div class="form-group">
-
-                    <label>
-                        Payment Mode
-                    </label>
-
+                    <label>Payment Mode</label>
                     <select id="paymentMode">
-
-                        <option value="Online">
-                            Online
-                        </option>
-
-                        <option value="Cash">
-                            Cash
-                        </option>
-
-                        <option value="Cheque">
-                            Cheque
-                        </option>
-
-                        <option value="Bank Transfer">
-                            Bank Transfer
-                        </option>
-
+                        <option value="Online">Online</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Cheque">Cheque</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
                     </select>
-
                 </div>
-
 
                 <div class="form-group full-width">
-
-                    <label>
-                        Paid By
-                    </label>
-
-                    <input
-                        type="text"
-                        id="paidBy"
-                        placeholder="Enter name"
-                    >
-
+                    <label>Paid By</label>
+                    <input type="text" id="paidBy" placeholder="Enter name">
                 </div>
-
 
                 <div class="form-group full-width">
-
-                    <label>
-                        Remarks
-                    </label>
-
-                    <textarea
-                        id="paymentRemarks"
-                        rows="3"
-                        placeholder="Enter remarks..."
-                    ></textarea>
-
+                    <label>Remarks</label>
+                    <textarea id="paymentRemarks" rows="3" placeholder="Enter remarks..."></textarea>
                 </div>
-
             </div>
-
 
             <div class="modal-footer">
-
-                <button
-                    type="button"
-                    class="modal-cancel"
-                    id="cancelPaymentBtn"
-                >
-                    Cancel
-                </button>
-
-                <button
-                    type="submit"
-                    class="modal-save"
-                >
-                    Save Payment
-                </button>
-
+                <button type="button" class="modal-cancel" id="cancelPaymentBtn">Cancel</button>
+                <button type="submit" class="modal-save">Save Payment</button>
             </div>
-
         </form>
-
     </div>
-
 </div>
 
 
 <!-- =============================================================
      CONTRACTOR MASTER MODAL
 ============================================================== -->
-
-<div
-    class="modal-overlay"
-    id="contractorModal"
-    style="display:none;"
->
-    <div class="payment-modal">
+<div class="modal-overlay" id="contractorModal" style="display:none;">
+    <div class="payment-modal" style="width: min(850px, 100%);">
         <div class="modal-header">
             <div>
                 <h2 id="contractorModalTitle">Add Contractor</h2>
-                <p>Maintain contractor master details</p>
+                <p>Select location, enter work quantities, then add another location</p>
             </div>
-
-            <button
-                class="modal-close"
-                id="closeContractorModal"
-            >
-                ×
-            </button>
+            <button class="modal-close" id="closeContractorModal">×</button>
         </div>
 
         <form id="contractorForm">
             <input type="hidden" id="contractorIdInput">
-            <div class="form-grid">
-                <div class="form-group full-width">
-                    <label>Contractor Name</label>
-                    <input type="text" id="contractorNameInput" placeholder="Enter contractor name" required>
+
+            <div style="padding: 20px;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Contractor Name</label>
+                        <input type="text" id="contractorNameInput" placeholder="Enter contractor name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Entry Date (Max: Today)</label>
+                        <input type="date" id="contractorDateInput" required>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Fabrication</label>
-                    <input type="number" id="fabricationInput" min="0" step="0.01" value="0">
+                <!-- ============================
+                     LOCATION ENTRY SECTION
+                ============================= -->
+                <div class="location-entry-section">
+                    <div class="location-entry-header">
+                        <span>Location Work Entry</span>
+                    </div>
+
+                    <div class="form-grid" style="align-items: end;">
+                        <div class="form-group">
+                            <label>Select Location</label>
+                            <select id="entryLocationSelect">
+                                <option value="">Select Location</option>
+                                <option value="Arneel industries karodi">Arneel industries karodi</option>
+                                <option value="Anil industries karodi">Anil industries karodi</option>
+                                <option value="Anil industries ghanegoan">Anil industries ghanegoan</option>
+                                <option value="Anil industries yavatmal">Anil industries yavatmal</option>
+                                <option value="Kpr projections">Kpr projections</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="button" class="add-location-btn" id="addLocationEntryBtn">＋ Add Location Entry</button>
+                        </div>
+                    </div>
+
+                    <div class="work-qty-grid">
+                        <div class="form-group">
+                            <label>Fabrication Qty</label>
+                            <input type="number" id="fabricationInput" min="0" step="0.01" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Cement Sheet Qty</label>
+                            <input type="number" id="cementSheetInput" min="0" step="0.01" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Electrical Qty</label>
+                            <input type="number" id="electricalInput" min="0" step="0.01" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Tiles Qty</label>
+                            <input type="number" id="tilesInput" min="0" step="0.01" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Plumbing Qty</label>
+                            <input type="number" id="plumbingInput" min="0" step="0.01" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Door Fitting Qty</label>
+                            <input type="number" id="doorFittingInput" min="0" step="0.01" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Outer Colour Qty</label>
+                            <input type="number" id="outerColourInput" min="0" step="0.01" value="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Inner Colour Qty</label>
+                            <input type="number" id="innerColourInput" min="0" step="0.01" value="0">
+                        </div>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Cement Sheet</label>
-                    <input type="number" id="cementSheetInput" min="0" step="0.01" value="0">
+                <!-- ============================
+                     ADDED LOCATIONS LIST
+                ============================= -->
+                <div class="added-locations-section" id="addedLocationsSection" style="display:none;">
+                    <div class="added-locations-header">
+                        <span>Added Location Entries</span>
+                        <button type="button" class="clear-all-btn" id="clearAllLocationsBtn">Clear All</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="added-locations-table">
+                            <thead>
+                                <tr>
+                                    <th>Location</th>
+                                    <th>Fabrication</th>
+                                    <th>Cement Sheet</th>
+                                    <th>Electrical</th>
+                                    <th>Tiles</th>
+                                    <th>Plumbing</th>
+                                    <th>Door Fitting</th>
+                                    <th>Outer Colour</th>
+                                    <th>Inner Colour</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="addedLocationsBody"></tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label>Electrical</label>
-                    <input type="number" id="electricalInput" min="0" step="0.01" value="0">
-                </div>
+                <div class="form-grid" style="margin-top: 12px;">
+                    <div class="form-group full-width">
+                        <label>Total Amount (Calculated via Rate Card)</label>
+                        <input type="number" id="totalAmountInput" min="0" step="0.01" value="0" readonly>
+                    </div>
 
-                <div class="form-group">
-                    <label>Tiles</label>
-                    <input type="number" id="tilesInput" min="0" step="0.01" value="0">
-                </div>
-
-                <div class="form-group">
-                    <label>Plumbing</label>
-                    <input type="number" id="plumbingInput" min="0" step="0.01" value="0">
-                </div>
-
-                <div class="form-group">
-                    <label>Door Fitting</label>
-                    <input type="number" id="doorFittingInput" min="0" step="0.01" value="0">
-                </div>
-
-                <div class="form-group">
-                    <label>Outer Colour</label>
-                    <input type="number" id="outerColourInput" min="0" step="0.01" value="0">
-                </div>
-
-                <div class="form-group">
-                    <label>Inner Colour</label>
-                    <input type="number" id="innerColourInput" min="0" step="0.01" value="0">
-                </div>
-
-                <div class="form-group full-width">
-                    <label>Total Amount</label>
-                    <input type="number" id="totalAmountInput" min="0" step="0.01" value="0" required>
-                </div>
-
-                <div class="form-group full-width">
-                    <label>Remark</label>
-                    <textarea id="contractorRemarkInput" rows="3" placeholder="Enter remark"></textarea>
+                    <div class="form-group full-width">
+                        <label>Remark</label>
+                        <textarea id="contractorRemarkInput" rows="3" placeholder="Enter remark"></textarea>
+                    </div>
                 </div>
             </div>
 
-            <div class="modal-footer">
+            <div class="modal-footer" style="padding: 0 20px 20px;">
                 <button type="button" class="modal-cancel" id="cancelContractorBtn">Cancel</button>
                 <button type="submit" class="modal-save">Save Contractor</button>
             </div>
@@ -1011,49 +564,202 @@
 
 
 <!-- =============================================================
-     CONTRACTOR DETAILS MODAL
+     RATE CARD MODAL  (UPDATED: history + add new)
 ============================================================== -->
-
-<div
-    class="modal-overlay"
-    id="contractorDetailsModal"
-    style="display:none;"
->
-    <div class="payment-modal">
+<div class="modal-overlay" id="rateCardModal" style="display:none;">
+    <div class="payment-modal" style="width: min(1000px, 100%);">
         <div class="modal-header">
             <div>
-                <h2 id="detailsModalTitle">Contractor Day-wise Details</h2>
-                <p id="detailsModalSubtitle">Payments for selected period</p>
+                <h2>Contractor Rate Card</h2>
+                <p>View historical rate cards and add a new one — all in this popup</p>
             </div>
-
-            <button
-                class="modal-close"
-                id="closeDetailsModal"
-            >
-                ×
-            </button>
+            <button class="modal-close" id="closeRateCardModal">×</button>
         </div>
 
-        <div class="table-container details-table-wrap">
-            <table id="contractorDetailsTable">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Payment By</th>
-                        <th>Mode</th>
-                        <th>Total Payment</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="contractorDetailsBody"></tbody>
-            </table>
+        <div style="padding: 20px;">
+
+            <!-- Contractor selector (shared by history + add) -->
+            <div class="form-group" style="margin-bottom: 16px;">
+                <label>Select Contractor</label>
+                <select id="rateCardContractorSelect">
+                    <option value="">Select Contractor</option>
+                </select>
+            </div>
+
+            <!-- ============================================
+                 HISTORICAL RATE CARDS
+            ============================================= -->
+            <div class="rate-card-section">
+                <div class="rate-card-section-title">
+                    <span>📋 Historical Rate Cards</span>
+                </div>
+                <div class="rate-history-wrapper">
+                    <table class="rate-history-table">
+                        <thead>
+                            <tr>
+                                <th>Effective From</th>
+                                <th>Fabrication</th>
+                                <th>Cement Sheet</th>
+                                <th>Electrical</th>
+                                <th>Tiles</th>
+                                <th>Plumbing</th>
+                                <th>Door Fitting</th>
+                                <th>Outer Colour</th>
+                                <th>Inner Colour</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rateHistoryBody">
+                            <tr>
+                                <td colspan="9" class="rate-history-empty">
+                                    Select a contractor to view rate history.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================
+                 ADD NEW RATE CARD
+            ============================================= -->
+            <div class="rate-card-section" style="margin-top: 20px;">
+                <div class="rate-card-section-title">
+                    <span>➕ Add New Rate Card</span>
+                </div>
+
+                <div class="form-grid" style="padding: 14px;">
+                    <div class="form-group">
+                        <label>Rate Card Effective Date</label>
+                        <input type="date" id="rateCardDate" value="2026-08-01">
+                    </div>
+                    <div class="form-group">
+                        <label>Fabrication Rate</label>
+                        <input type="number" id="rateFabrication" value="0" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Cement Sheet Rate</label>
+                        <input type="number" id="rateCementSheet" value="0" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Electrical Rate</label>
+                        <input type="number" id="rateElectrical" value="0" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Tiles Rate</label>
+                        <input type="number" id="rateTiles" value="0" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Plumbing Rate</label>
+                        <input type="number" id="ratePlumbing" value="0" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Door Fitting Rate</label>
+                        <input type="number" id="rateDoorFitting" value="0" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Outer Colour Rate</label>
+                        <input type="number" id="rateOuterColour" value="0" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label>Inner Colour Rate</label>
+                        <input type="number" id="rateInnerColour" value="0" min="0" step="0.01">
+                    </div>
+                </div>
+
+                <div class="modal-footer" style="margin: 0 14px 14px; padding-top: 14px; border-top: 1px solid #e4e7ec;">
+                    <button type="button" class="modal-cancel" id="cancelRateCardBtn">Close</button>
+                    <button type="button" class="modal-save" id="saveRateCardBtn">Save Rate Card</button>
+                </div>
+            </div>
+
         </div>
     </div>
 </div>
 
 
+<!-- =============================================================
+     WORK ENTRY MODAL (for adding/editing a single work entry)
+============================================================== -->
+<div class="modal-overlay" id="workEntryModal" style="display:none;">
+    <div class="payment-modal" style="width: min(700px, 100%);">
+        <div class="modal-header">
+            <div>
+                <h2 id="workEntryModalTitle">Add Work Entry</h2>
+                <p id="workEntryModalSubtitle">Add a location entry with work quantities</p>
+            </div>
+            <button class="modal-close" id="closeWorkEntryModal">×</button>
+        </div>
+
+        <form id="workEntryForm">
+            <input type="hidden" id="workEntryIdInput">
+            <input type="hidden" id="workEntryContractorIdInput">
+
+            <div style="padding: 20px;">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Location</label>
+                        <select id="workEntryLocationSelect" required>
+                            <option value="">Select Location</option>
+                            <option value="Arneel industries karodi">Arneel industries karodi</option>
+                            <option value="Anil industries karodi">Anil industries karodi</option>
+                            <option value="Anil industries ghanegoan">Anil industries ghanegoan</option>
+                            <option value="Anil industries yavatmal">Anil industries yavatmal</option>
+                            <option value="Kpr projections">Kpr projections</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Entry Date</label>
+                        <input type="date" id="workEntryDateInput">
+                    </div>
+                </div>
+
+                <div class="work-qty-grid" style="margin-top: 12px;">
+                    <div class="form-group">
+                        <label>Fabrication Qty</label>
+                        <input type="number" id="workEntryFabrication" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Cement Sheet Qty</label>
+                        <input type="number" id="workEntryCementSheet" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Electrical Qty</label>
+                        <input type="number" id="workEntryElectrical" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Tiles Qty</label>
+                        <input type="number" id="workEntryTiles" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Plumbing Qty</label>
+                        <input type="number" id="workEntryPlumbing" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Door Fitting Qty</label>
+                        <input type="number" id="workEntryDoorFitting" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Outer Colour Qty</label>
+                        <input type="number" id="workEntryOuterColour" min="0" step="0.01" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Inner Colour Qty</label>
+                        <input type="number" id="workEntryInnerColour" min="0" step="0.01" value="0">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer" style="padding: 0 20px 20px;">
+                <button type="button" class="modal-cancel" id="cancelWorkEntryBtn">Cancel</button>
+                <button type="submit" class="modal-save">Save Work Entry</button>
+            </div>
+        </form>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
-<script src="contractorpayment.js?v=2"></script>
+<script src="contractorpayment.js?v=11"></script>
 
 </body>
 </html>

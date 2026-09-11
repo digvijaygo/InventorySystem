@@ -118,6 +118,40 @@
         </div>
 
 
+        <div class="summary-card purchase-gst-card">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-receipt"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Purchase GST</span>
+                <h2 id="totalPurchaseTax">₹0</h2>
+                <small>
+                    GST paid on purchases
+                </small>
+            </div>
+
+        </div>
+
+
+        <div class="summary-card sales-gst-card">
+
+            <div class="summary-icon">
+                <i class="fa-solid fa-file-invoice-dollar"></i>
+            </div>
+
+            <div class="summary-content">
+                <span>Sales GST</span>
+                <h2 id="totalSalesTax">₹0</h2>
+                <small>
+                    GST collected on sales
+                </small>
+            </div>
+
+        </div>
+
+
         <div class="summary-card profit-card">
 
             <div class="summary-icon">
@@ -249,9 +283,6 @@
                     <p>Based on quantity sold</p>
                 </div>
 
-                <button class="icon-button">
-                    <i class="fa-solid fa-ellipsis"></i>
-                </button>
 
             </div>
 
@@ -441,10 +472,7 @@
                 <span id="recordCount">Showing 0 transactions</span>
             </div>
 
-            <button class="btn btn-outline">
-                <i class="fa-solid fa-print"></i>
-                Print
-            </button>
+       
 
         </div>
 
@@ -460,6 +488,7 @@
                         <th>Invoice Date</th>
                         <th>Invoice Number</th>
                         <th>Bill To</th>
+                        <th>Ship To</th>
                         <th>Item</th>
                         <th>Quantity</th>
                         <th>HSN Code</th>
