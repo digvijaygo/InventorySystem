@@ -844,7 +844,7 @@ app.post('/api/auth/request-otp', async (req, res) => {
 
         res.json({
             message: 'OTP sent to registered mobile number.',
-            otp: process.env.NODE_ENV === 'production' ? undefined : otp,
+            otp: otp,
             expires_in_minutes: OTP_TTL_MINUTES
         });
     } catch (error) {
