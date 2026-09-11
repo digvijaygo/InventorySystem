@@ -264,6 +264,43 @@ function calculateEntryAmount(entry, contractorId) {
 	return total;
 }
 
+/**
+ * Compute the date-based total for a contractor from its work entries
+ * (matches what the expansion matrix shows in its AMOUNT column).
+ * Falls back to the stored total_amount if entries aren't loaded yet.
+ */
+function computeDateBasedTotal(contractorId, fallbackTotal) {
+	const entries = state.expandedPayments[`entries-${contractorId}`];
+	if (!Array.isArray(entries) || !entries.length) return Number(fallbackTotal) || 0;
+
+	const rateHistory = state.rateCardHistory[String(contractorId)] || [];
+	const sortedCards = [...rateHistory].sort(
+		(a, b) => new Date(b.effective_date) - new Date(a.effective_date)
+	);
+
+	function pickRate(workTypeKey, entryDate) {
+		if (!sortedCards.length) return 0;
+		const workDate = new Date(entryDate || '9999-12-31');
+		for (const card of sortedCards) {
+			if (new Date(card.effective_date) <= workDate) {
+				return Number(card.rates[workTypeKey]) || 0;
+			}
+		}
+		const oldest = sortedCards[sortedCards.length - 1];
+		return Number(oldest.rates[workTypeKey]) || 0;
+	}
+
+	let total = 0;
+	entries.forEach((e) => {
+		const d = e.entry_date || '';
+		MATRIX_WORK_TYPES.forEach((wt) => {
+			const qty = Number(e[wt.key]) || 0;
+			if (qty > 0) total += qty * pickRate(wt.key, d);
+		});
+	});
+	return total;
+}
+
 function calculateTotalFromPendingEntries() {
 	const contractorId = elements.contractorIdInput.value || '';
 	let total = 0;
@@ -572,12 +609,81 @@ async function fetchContractorEntries(contractorId) {
 }
 
 /* ============================================================
+   PRELOAD WORK ENTRIES + RATE CARDS FOR ALL VISIBLE ROWS
+   This ensures the "Total Amount" column in the main table
+   matches the AMOUNT total in the expansion matrix.
+============================================================ */
+async function preloadEntriesForRows(rows) {
+	await Promise.all(rows.map(async (row) => {
+		const id = Number(row.id);
+		if (!id) return;
+
+		// Rate card history (cached in state.rateCardHistory)
+		if (!state.rateCardHistory[String(id)]) {
+			await loadRateCardForContractor(id, true);
+		}
+
+		// Work entries
+		const cacheKey = `entries-${id}`;
+		if (!state.expandedPayments[cacheKey]) {
+			const entries = await fetchContractorEntries(id);
+			state.expandedPayments[cacheKey] = entries;
+		}
+	}));
+}
+
+/* ============================================================
    KPIs + WORK SUMMARY
 ============================================================ */
 
+/**
+ * Date-based total for a contractor (matches the matrix AMOUNT column).
+ * Uses cached entries + rate card history. Falls back to the stored
+ * total_amount if entries are not yet loaded.
+ */
+function computeDateBasedTotal(contractorId, fallbackTotal) {
+	const entries = state.expandedPayments[`entries-${contractorId}`];
+	if (!Array.isArray(entries) || !entries.length) return Number(fallbackTotal) || 0;
+
+	const rateHistory = state.rateCardHistory[String(contractorId)] || [];
+	const sortedCards = [...rateHistory].sort(
+		(a, b) => new Date(b.effective_date) - new Date(a.effective_date)
+	);
+
+	function pickRate(workTypeKey, entryDate) {
+		if (!sortedCards.length) return 0;
+		const workDate = new Date(entryDate || '9999-12-31');
+		for (const card of sortedCards) {
+			if (new Date(card.effective_date) <= workDate) {
+				return Number(card.rates[workTypeKey]) || 0;
+			}
+		}
+		const oldest = sortedCards[sortedCards.length - 1];
+		return Number(oldest.rates[workTypeKey]) || 0;
+	}
+
+	let total = 0;
+	entries.forEach((e) => {
+		const d = e.entry_date || '';
+		MATRIX_WORK_TYPES.forEach((wt) => {
+			const qty = Number(e[wt.key]) || 0;
+			if (qty > 0) total += qty * pickRate(wt.key, d);
+		});
+	});
+	return total;
+}
+
 function updateKpis() {
 	const totalContractors = state.rows.length;
-	const totalAmount = state.rows.reduce((sum, row) => sum + (Number(row.total_amount) || 0), 0);
+
+	// Ensure rate-card history + entries are loaded for each row before summing,
+	// so the KPI total matches the per-row Total Amount column.
+	// (They may not be loaded yet on first render — falls back gracefully.)
+	const totalAmount = state.rows.reduce((sum, row) => {
+		const displayed = computeDateBasedTotal(row.id, row.total_amount);
+		return sum + displayed;
+	}, 0);
+
 	const totalPayment = state.rows.reduce((sum, row) => sum + (Number(row.total_payment) || 0), 0);
 	const totalBalance = totalAmount - totalPayment;
 
@@ -833,8 +939,12 @@ async function loadWorkEntries(contractorId) {
 	await loadRateCardForContractor(contractorId, true);
 	const rateHistory = state.rateCardHistory[String(contractorId)] || [];
 
-	const entries = await fetchContractorEntries(contractorId);
-	state.expandedPayments[`entries-${contractorId}`] = entries;
+	const cacheKey = `entries-${contractorId}`;
+	let entries = state.expandedPayments[cacheKey];
+	if (!Array.isArray(entries)) {
+		entries = await fetchContractorEntries(contractorId);
+		state.expandedPayments[cacheKey] = entries;
+	}
 
 	const built = buildContractorWorkEntriesMatrix(contractorId, entries, rateHistory);
 
@@ -846,7 +956,7 @@ async function loadWorkEntries(contractorId) {
    MAIN TABLE
 ============================================================ */
 
-function renderTable() {
+async function renderTable() {
 	const totalEntries = state.rows.length;
 	const totalPages = Math.max(1, Math.ceil(totalEntries / PAGE_SIZE));
 	if (state.currentPage > totalPages) state.currentPage = totalPages;
@@ -854,6 +964,10 @@ function renderTable() {
 	const startIndex = (state.currentPage - 1) * PAGE_SIZE;
 	const endIndex = startIndex + PAGE_SIZE;
 	const pageRows = state.rows.slice(startIndex, endIndex);
+
+	// Preload entries + rate cards for every visible row so the
+	// Total Amount column always matches the matrix AMOUNT.
+	await preloadEntriesForRows(pageRows);
 
 	elements.contractorTableBody.innerHTML = '';
 
@@ -886,7 +1000,7 @@ function renderTable() {
 			<td>${formatNumber(row.door_fitting)}</td>
 			<td>${formatNumber(row.outer_colour)}</td>
 			<td>${formatNumber(row.inner_colour)}</td>
-			<td>₹${formatCurrency(row.total_amount)}</td>
+			<td>₹${formatCurrency(computeDateBasedTotal(row.id, row.total_amount))}</td>
 			<td>₹${formatCurrency(row.total_payment)}</td>
 			<td class="${balanceClass}">₹${formatCurrency(balance)}</td>
 			<td><span class="status-badge ${statusClass}">${escapeHtml(row.payment_status)}</span></td>
@@ -1003,10 +1117,11 @@ function renderPagination(totalPages) {
 	elements.lastPageBtn.disabled = state.currentPage === totalPages;
 }
 
-function renderAll() {
+async function renderAll() {
 	updateKpis();
 	updateWorkSummary();
-	renderTable();
+	await renderTable();
+	updateKpis(); // recompute with date-based totals now that entries are loaded
 }
 
 /* ============================================================
