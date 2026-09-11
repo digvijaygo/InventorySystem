@@ -441,7 +441,7 @@ button {
 
 .product-progress {
     height: 5px;
-    background: #f0f2f5;
+    background: #6366f1;
     border-radius: 5px;
     margin-top: 8px;
 }
@@ -1189,3 +1189,92 @@ td {
 }
 
 tbody tr:hover { background: #f8fbff; }
+
+/* =========================================
+   LAYOUT STABILITY — 3 KPI CARDS PER ROW
+   No whitespace, no jump when sidebar toggles
+========================================= */
+
+/* Let the page fill the iframe completely — no artificial max-width */
+.page-container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 18px 30px;
+}
+
+/* KPI row: exactly 3 columns, wraps to a second row of 3 */
+.summary-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+/* Force 3 columns at every breakpoint — no stacking */
+@media (max-width: 1200px) {
+    .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+    .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 768px) {
+    .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+    .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Cards stretch to fill their grid cell — no empty space inside */
+.summary-card {
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    padding: 16px;
+    gap: 15px;
+}
+
+/* Text block takes remaining space inside the card */
+.summary-content {
+    min-width: 0;
+    flex: 1;
+}
+
+/* Long text truncates instead of pushing the card wider */
+.summary-content h2,
+.summary-content span,
+.summary-content small {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Icon stays at comfortable size for the wider cards */
+.summary-icon {
+    width: 57px;
+    height: 57px;
+    flex: 0 0 57px;
+    font-size: 22px;
+}
+
+.summary-content h2 {
+    font-size: 23px;
+}
+
+/* Dashboard grid + filter + tables stretch to full width */
+.dashboard-grid,
+.filter-card,
+.table-card,
+.filters {
+    width: 100%;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Kill horizontal scrollbar that sometimes appears on resize */
+body { overflow-x: hidden; }

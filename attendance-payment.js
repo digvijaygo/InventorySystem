@@ -199,9 +199,243 @@
         document.querySelector('#employee-form').reset(); document.querySelector('#new-employee-department').value = 'Production'; closeEmployeeForm();
     }
     function importFile(file) { const reader = new FileReader(); reader.onload = () => { try { const imported = JSON.parse(reader.result); if (!Array.isArray(imported)) throw new Error(); records = imported; normalizeMonthRecords(); tableBody.innerHTML = ''; records.forEach(() => { const row = document.createElement('tr'); row.className = 'employee-row'; row.innerHTML = '<td class="employee-name"><div class="employee-info"><div class="avatar"></div><div><strong></strong><small></small></div></div></td><td class="total"></td><td class="paid"></td><td class="due"></td>'; tableBody.appendChild(row); }); renderMonthlyRows(); renderSummary(); saveRecords('Attendance imported'); } catch (error) { showMessage('Import a JSON export file'); } }; reader.readAsText(file); }
+    /* =========================================================
+       EXCEL EXPORT — mirrors the employee popup structure
+       =========================================================
+       Sheet 1 "Summary" — one row per employee with month totals
+       Sheet 2 "Daily Details" — one row per employee per day,
+       matching every field visible in the daily table of the popup.
+    ========================================================== */
 
-    document.querySelector('#export-button').addEventListener('click', () => { const blob = new Blob([JSON.stringify(records, null, 2)], { type: 'application/json' }); const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = `attendance-${selectedPeriod()}.json`; link.click(); URL.revokeObjectURL(link.href); });
-    document.querySelector('#import-button').addEventListener('click', () => document.querySelector('#import-file').click()); document.querySelector('#import-file').addEventListener('change', (event) => { if (event.target.files[0]) importFile(event.target.files[0]); event.target.value = ''; }); document.querySelector('#add-employee-button').addEventListener('click', addEmployee);
+    function buildSummarySheet() {
+        return records.map((record) => {
+            const totals = getTotals(record);
+            return {
+                'Employee ID': record.id,
+                'Employee Name': record.name,
+                'Department': record.department || '',
+                'Joining Date': record.joiningDate || '',
+                'Month': selectedPeriod(),
+                'Present Days': totals.present,
+                'Monthly Hours': Number(totals.hours.toFixed(2)),
+                'Total Payable': Number(totals.total.toFixed(2)),
+                'Paid Amount': Number(record.paid || 0),
+                'Due Amount': Number(totals.due.toFixed(2))
+            };
+        });
+    }
+
+    function buildDailySheet() {
+        const rows = [];
+        records.forEach((record) => {
+            getMonthDays(record).forEach((day) => {
+                if (!day) return;
+                if (!day.status && !day.rate && !day.hours && !day.inTime && !day.outTime && !day.remarks) return;
+                rows.push({
+                    'Employee ID': record.id,
+                    'Employee Name': record.name,
+                    'Department': record.department || '',
+                    'Date': day.date || '',
+                    'Status': day.status || '',
+                    'Rate': day.rate === '' ? '' : Number(day.rate),
+                    'In Time': day.inTime || '',
+                    'Out Time': day.outTime || '',
+                    'Hours': day.hours === '' ? '' : Number(day.hours),
+                    'Daily Pay': (day.rate !== '' && day.hours !== '') ? Number(day.rate) * Number(day.hours) : '',
+                    'Remarks': day.remarks || ''
+                });
+            });
+        });
+        return rows;
+    }
+
+    function exportToExcel() {
+        if (typeof XLSX === 'undefined') {
+            showMessage('Excel library not loaded');
+            return;
+        }
+        const workbook = XLSX.utils.book_new();
+
+        const summarySheet = XLSX.utils.json_to_sheet(buildSummarySheet());
+        const dailySheet = XLSX.utils.json_to_sheet(buildDailySheet());
+
+        // Reasonable column widths
+        summarySheet['!cols'] = [
+            { wch: 12 }, { wch: 22 }, { wch: 16 }, { wch: 14 }, { wch: 12 },
+            { wch: 13 }, { wch: 14 }, { wch: 14 }, { wch: 14 }, { wch: 14 }
+        ];
+        dailySheet['!cols'] = [
+            { wch: 12 }, { wch: 22 }, { wch: 16 }, { wch: 12 }, { wch: 10 },
+            { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 10 }, { wch: 12 }, { wch: 22 }
+        ];
+
+        XLSX.utils.book_append_sheet(workbook, summarySheet, 'Summary');
+        XLSX.utils.book_append_sheet(workbook, dailySheet, 'Daily Details');
+
+        XLSX.writeFile(workbook, `attendance-${selectedPeriod()}.xlsx`);
+        showMessage('Excel exported');
+    }
+
+    /* =========================================================
+       EXCEL IMPORT
+       - Accepts .xlsx / .xls (preferred) or .json (legacy)
+       - "Daily Details" sheet is the source of truth for daily data
+       - "Summary" sheet gives name / department / joining date / paid
+       - Falls back to the first sheet if "Daily Details" is absent
+    ========================================================== */
+
+    function importFromWorkbook(workbook) {
+        const dailySheetName = workbook.SheetNames.find((name) => /daily/i.test(name)) || workbook.SheetNames[0];
+        const summarySheetName = workbook.SheetNames.find((name) => /summary/i.test(name));
+
+        const dailyRows = XLSX.utils.sheet_to_json(workbook.Sheets[dailySheetName], { defval: '' });
+        const summaryRows = summarySheetName
+            ? XLSX.utils.sheet_to_json(workbook.Sheets[summarySheetName], { defval: '' })
+            : [];
+
+        if (!dailyRows.length && !summaryRows.length) {
+            showMessage('No data found in the workbook');
+            return;
+        }
+
+        const byId = new Map();
+
+        // Seed from Summary sheet (gives name/department/joining/paid)
+        summaryRows.forEach((row) => {
+            const id = String(row['Employee ID'] || '').trim();
+            if (!id) return;
+            byId.set(id, {
+                id,
+                name: String(row['Employee Name'] || '').trim() || id,
+                department: String(row['Department'] || '').trim(),
+                joiningDate: validDate(String(row['Joining Date'] || '')),
+                paid: parseMoney(row['Paid Amount']),
+                daily: []
+            });
+        });
+
+        // Fill daily from Daily Details sheet
+        dailyRows.forEach((row) => {
+            const id = String(row['Employee ID'] || '').trim();
+            if (!id) return;
+            if (!byId.has(id)) {
+                byId.set(id, {
+                    id,
+                    name: String(row['Employee Name'] || '').trim() || id,
+                    department: String(row['Department'] || '').trim(),
+                    joiningDate: isoDate(1),
+                    paid: 0,
+                    daily: []
+                });
+            }
+            const record = byId.get(id);
+            const date = String(row['Date'] || '').trim();
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return;
+
+            const status = String(row['Status'] || '').trim().toUpperCase();
+            const rateRaw = row['Rate'];
+            const hoursRaw = row['Hours'];
+
+            record.daily.push({
+                date,
+                status: ['P', 'A', 'H'].includes(status) ? status : (status === 'PRESENT' ? 'P' : status === 'ABSENT' ? 'A' : status === 'HOLIDAY' ? 'H' : ''),
+                rate: rateRaw === '' ? '' : Number(rateRaw),
+                inTime: String(row['In Time'] || ''),
+                outTime: String(row['Out Time'] || ''),
+                hours: hoursRaw === '' ? '' : Number(hoursRaw),
+                remarks: String(row['Remarks'] || '')
+            });
+        });
+
+        const imported = Array.from(byId.values());
+
+        // For any record without a daily array (or missing days for the current month),
+        // fill remaining days with empty placeholders so normalizeMonthRecords works.
+        imported.forEach((record) => {
+            if (!Array.isArray(record.daily)) record.daily = [];
+        });
+
+        if (!imported.length) {
+            showMessage('No valid records in workbook');
+            return;
+        }
+
+        records = imported;
+        normalizeMonthRecords();
+
+        // Rebuild tbody rows
+        tableBody.innerHTML = '';
+        records.forEach(() => {
+            const row = document.createElement('tr');
+            row.className = 'employee-row';
+            row.innerHTML = '<td class="employee-name"><div class="employee-info"><div class="avatar"></div><div><strong></strong><small></small></div></div></td><td class="total"></td><td class="paid"></td><td class="due"></td>';
+            tableBody.appendChild(row);
+        });
+
+        renderMonthlyRows();
+        renderSummary();
+        saveRecords('Attendance imported');
+    }
+
+    function importFile(file) {
+        if (!file) return;
+        const reader = new FileReader();
+
+        reader.onload = (event) => {
+            const fileName = (file.name || '').toLowerCase();
+
+            // Legacy JSON path (kept for backwards compatibility)
+            if (fileName.endsWith('.json')) {
+                try {
+                    const imported = JSON.parse(event.target.result);
+                    if (!Array.isArray(imported)) throw new Error('bad json');
+                    records = imported;
+                    normalizeMonthRecords();
+                    tableBody.innerHTML = '';
+                    records.forEach(() => {
+                        const row = document.createElement('tr');
+                        row.className = 'employee-row';
+                        row.innerHTML = '<td class="employee-name"><div class="employee-info"><div class="avatar"></div><div><strong></strong><small></small></div></div></td><td class="total"></td><td class="paid"></td><td class="due"></td>';
+                        tableBody.appendChild(row);
+                    });
+                    renderMonthlyRows();
+                    renderSummary();
+                    saveRecords('Attendance imported');
+                } catch (error) {
+                    showMessage('Invalid JSON file');
+                }
+                return;
+            }
+
+            // Excel path
+            if (typeof XLSX === 'undefined') {
+                showMessage('Excel library not loaded');
+                return;
+            }
+            try {
+                const data = new Uint8Array(event.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                importFromWorkbook(workbook);
+            } catch (error) {
+                showMessage('Could not read the Excel file');
+            }
+        };
+
+        // Read as ArrayBuffer for Excel, as text for JSON
+        if ((file.name || '').toLowerCase().endsWith('.json')) {
+            reader.readAsText(file);
+        } else {
+            reader.readAsArrayBuffer(file);
+        }
+    }
+
+    document.querySelector('#export-button').addEventListener('click', exportToExcel);
+    document.querySelector('#import-button').addEventListener('click', () => document.querySelector('#import-file').click());
+    document.querySelector('#import-file').addEventListener('change', (event) => {
+        if (event.target.files[0]) importFile(event.target.files[0]);
+        event.target.value = '';
+    });
+    
     document.querySelector('#employee-form').addEventListener('submit', createEmployee); document.querySelector('#employee-form-close').addEventListener('click', closeEmployeeForm); document.querySelector('#employee-form-cancel').addEventListener('click', closeEmployeeForm);
     document.querySelector('.modal-close').addEventListener('click', closeDetails); detailsModal.addEventListener('click', (event) => { if (event.target === detailsModal) closeDetails(); }); document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeDetails(); });
     function resetEmployeePage() { employeePage = 0; renderMonthlyRows(); }

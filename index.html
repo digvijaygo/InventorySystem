@@ -18,13 +18,6 @@
             </div>
 
           <nav class="menu">
-    <a href="#" id="homeLink" class="menu-link active" title="Home">
-        <span class="menu-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v11a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V9"/></svg>
-        </span>
-        <span class="menu-label">Home</span>
-    </a>
-
     <a href="dashboard.html" class="menu-link view-link" data-title="Dashboard" target="productFrame" title="Dashboard">
         <span class="menu-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
@@ -47,18 +40,7 @@
             </span>
             <span class="menu-label">Prefabricated Sanitary Facilities – Boys & Girls</span>
         </a>
-        <a href="#" class="submenu-link disabled" aria-disabled="true" title="Product 2 (Coming Soon)">
-            <span class="menu-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="1"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
-            </span>
-            <span class="menu-label">Product 2 (Coming Soon)</span>
-        </a>
-        <a href="#" class="submenu-link disabled" aria-disabled="true" title="Product 3 (Coming Soon)">
-            <span class="menu-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="1"/><path d="M7 8V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>
-            </span>
-            <span class="menu-label">Product 3 (Coming Soon)</span>
-        </a>
+       
     </div>
 
     <a href="dailystocks.html" class="menu-link view-link" data-title="Daily Stocks" target="productFrame" title="Daily Stocks">
@@ -167,7 +149,6 @@
     </div>
 
     <script>
-        const homeLink = document.getElementById('homeLink');
         const sidebarToggle = document.getElementById('sidebarToggle');
         const inventoryToggle = document.getElementById('inventoryToggle');
         const inventoryDropdown = document.getElementById('inventoryDropdown');
@@ -302,7 +283,6 @@
             productFrame.style.display = 'none';
             productFrame.src = 'about:blank';
 
-            homeLink.classList.add('active');
             viewLinks.forEach((link) => link.classList.remove('active'));
         }
 
@@ -321,19 +301,23 @@
                 productFrame.src = targetHref;
             }
 
-            homeLink.classList.remove('active');
             viewLinks.forEach((entry) => entry.classList.remove('active'));
             link.classList.add('active');
+        }
+
+        // Default view after login = Dashboard
+        function openDefaultView() {
+            const dashboardLink = document.querySelector('.view-link[data-title="Dashboard"]');
+            if (dashboardLink) {
+                showProduct(dashboardLink);
+            } else {
+                showWelcomeScreen();
+            }
         }
 
         inventoryToggle.addEventListener('click', () => {
             const isOpen = inventoryDropdown.classList.toggle('open');
             inventoryToggle.setAttribute('aria-expanded', String(isOpen));
-        });
-
-        homeLink.addEventListener('click', (event) => {
-            event.preventDefault();
-            showWelcomeScreen();
         });
 
         viewLinks.forEach((link) => {
@@ -390,7 +374,7 @@
 
         initializeBanner();
         loadSessionUser();
-        showWelcomeScreen();
+        openDefaultView();
     </script>
 </body>
 </html>

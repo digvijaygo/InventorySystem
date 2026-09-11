@@ -74,6 +74,8 @@ requestOtpForm.addEventListener('submit', async (event) => {
         requestOtpForm.classList.add('hidden');
         verifyOtpForm.classList.remove('hidden');
 
+       // const devOtpHint = payload.otp ? ` OTP (dev): ${payload.otp}` : '';
+       // setStatus(`OTP sent successfully.${devOtpHint}`);
         const otpHint = payload.otp ? ` OTP: ${payload.otp}` : '';
         setStatus(`OTP generated successfully.${otpHint}`);
     } catch (error) {

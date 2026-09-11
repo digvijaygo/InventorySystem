@@ -116,27 +116,31 @@
         </div>`).join('');
     }
 
-    function renderTopProducts() {
+       function renderTopProducts() {
         const productList = document.querySelector('.product-list');
         if (!productList) return;
-        const totals = transactions.filter((transaction) => transaction.transaction_type === 'Sale').reduce((summary, transaction) => {
-            const name = transaction.item_name || 'Unknown';
-            summary[name] = (summary[name] || 0) + Number(transaction.quantity || 0);
-            return summary;
-        }, {});
-        const topProducts = Object.entries(totals).sort((a, b) => b[1] - a[1]).slice(0, 4);
+        // Top 5 PURCHASE items by total quantity purchased
+        const totals = transactions
+            .filter((transaction) => transaction.transaction_type === 'Purchase')
+            .reduce((summary, transaction) => {
+                const name = transaction.item_name || 'Unknown';
+                summary[name] = (summary[name] || 0) + Number(transaction.quantity || 0);
+                return summary;
+            }, {});
+        const topProducts = Object.entries(totals)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5);
         if (!topProducts.length) {
-            productList.innerHTML = '<p class="empty-state">No sales recorded yet.</p>';
+            productList.innerHTML = '<p class="empty-state">No purchases recorded yet.</p>';
             return;
         }
-        const maxQuantity = topProducts[0][1];
+        const maxQuantity = topProducts[0][1] || 1;
         productList.innerHTML = topProducts.map(([name, quantity]) => `<div class="product-row">
             <div class="product-icon"><i class="fa-solid fa-cube"></i></div>
-            <div class="product-info"><strong>${escapeHtml(name)}</strong><span>${quantity} units sold</span></div>
+            <div class="product-info"><strong>${escapeHtml(name)}</strong><span>${quantity} units purchased</span></div>
             <div class="product-progress"><div style="width:${Math.max(4, Math.round((quantity / maxQuantity) * 100))}%"></div></div>
         </div>`).join('');
     }
-
     function filteredTransactions() {
         const fromDate = document.querySelector('#fromDate').value;
         const toDate = document.querySelector('#toDate').value;

@@ -1312,3 +1312,108 @@ body {
     border-top-color: #eef0f4;
     background: #fafafa;
 }
+/* =========================================
+   LAYOUT STABILITY WHEN SIDEBAR COLLAPSES
+   3 KPI cards per row (2 rows total)
+========================================= */
+
+/* Let the page fill the iframe completely — no artificial max-width */
+.page-container {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0 18px 30px;
+}
+
+/* KPI row: exactly 3 columns, wraps to a second row of 3 */
+.summary-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+/* Force 3 columns at every breakpoint — no stacking */
+@media (max-width: 1200px) {
+    .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+    .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+    .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 480px) {
+    .summary-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Cards stretch to fill their grid cell — no empty space inside */
+.summary-card {
+    min-width: 0;
+    width: 100%;
+    overflow: hidden;
+    padding: 16px;
+    gap: 14px;
+}
+
+/* Text block takes remaining space inside the card */
+.summary-card > div:last-child {
+    min-width: 0;
+    flex: 1;
+}
+
+/* Long text truncates instead of pushing the card wider */
+.summary-card strong,
+.summary-card span {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Restore comfortable icon and text sizes for the wider cards */
+.summary-icon {
+    width: 57px;
+    height: 57px;
+    flex: 0 0 57px;
+    font-size: 22px;
+}
+
+.summary-card strong {
+    font-size: 23px;
+}
+
+/* Filter row: fill the width evenly */
+.filter-section {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.filter-section .search-box {
+    flex: 1 1 220px;
+    min-width: 0;
+}
+
+.filter-section .filter-select {
+    flex: 0 0 190px;
+}
+
+/* Tables: stretch to container width */
+.attendance-section,
+.employee-details,
+.filter-section,
+.summary-grid {
+    width: 100%;
+}
+
+.table-wrapper,
+.daily-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+/* Kill horizontal scrollbar that sometimes appears on resize */
+body { overflow-x: hidden; }
